@@ -1,12 +1,10 @@
 package com.example.ourwhatsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -54,18 +52,15 @@ public class ListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 
-                intent.putExtra("userName", userNames[i]);
-                intent.putExtra("profilePicture", profilePictures[i]);
-                intent.putExtra("lastMassage", lastMassages[i]);
-                intent.putExtra("time", times[i]);
+            intent.putExtra("userName", userNames[i]);
+            intent.putExtra("profilePicture", profilePictures[i]);
+            intent.putExtra("lastMassage", lastMassages[i]);
+            intent.putExtra("time", times[i]);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
     }
 }

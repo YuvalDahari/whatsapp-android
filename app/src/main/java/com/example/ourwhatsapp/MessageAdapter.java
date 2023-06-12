@@ -1,0 +1,49 @@
+package com.example.ourwhatsapp;
+
+import android.content.Context;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
+import android.widget.TextView;
+
+import java.util.List;
+
+public class MessageAdapter extends ArrayAdapter<Message> {
+    private final List<Message> messages;
+
+    public MessageAdapter(Context context, int resource, List<Message> messages) {
+        super(context, resource, messages);
+        this.messages = messages;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        int reversedPosition = getCount() - 1 - position;
+        Message message = messages.get(reversedPosition);
+
+        if (convertView == null) {
+            LayoutInflater inflater = (LayoutInflater) getContext().getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            convertView = inflater.inflate(R.layout.custom_messages_item, parent, false);
+        }
+
+        TextView msgTextView = convertView.findViewById(R.id.msg);
+        TextView timeTextView = convertView.findViewById(R.id.time);
+
+        msgTextView.setText(message.getContent());
+        timeTextView.setText(message.getTime());
+
+        int backgroundResId;
+        if (message.getMessageType() == Message.MessageType.SENT) {
+            backgroundResId = R.drawable.send_chat_bubble_background;
+        } else {
+            backgroundResId = R.drawable.get_chat_bubble_background;
+        }
+
+        convertView.findViewById(R.id.constraintLayout).setBackgroundResource(backgroundResId);
+
+
+        return convertView;
+    }
+}
+

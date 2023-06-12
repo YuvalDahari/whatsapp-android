@@ -1,11 +1,15 @@
 package com.example.ourwhatsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class UserActivity extends AppCompatActivity {
 
@@ -28,6 +32,14 @@ public class UserActivity extends AppCompatActivity {
 
             profilePictureView.setImageResource(profilePicture);
             userNameView.setText(userName);
+
+            List<Message> messages = new ArrayList<>();
+            messages.add(new Message("Hello", "10:00", Message.MessageType.SENT));
+            messages.add(new Message("Hi", "10:05", Message.MessageType.RECEIVED));
+
+            ListView listView = findViewById(R.id.list_view);
+            MessageAdapter adapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
+            listView.setAdapter(adapter);
         }
     }
 }

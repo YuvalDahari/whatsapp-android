@@ -5,133 +5,218 @@
     android:id="@+id/relativeLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/register"
-    tools:context=".RegisterActivity">
+    android:background="@drawable/wallpaper"
+    tools:context=".RegisterActivity"
+    tools:ignore="MotionLayoutInvalidSceneFileReference">
 
-    <EditText
-        android:id="@+id/password"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/confirm_password"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.48"
-        app:layout_constraintStart_toEndOf="@+id/user_name"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.769" />
-
-    <EditText
-        android:id="@+id/user_name"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="200dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.137"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <EditText
-        android:id="@+id/display_name"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:layout_marginTop="48dp"
-        android:layout_marginEnd="40dp"
-        android:ems="10"
-        android:inputType="textPersonName"
-        android:text=""
-        app:layout_constraintBottom_toTopOf="@+id/add_photo_button"
-        app:layout_constraintEnd_toStartOf="@+id/confirm_password"
-        app:layout_constraintHorizontal_bias="0.923"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/user_name"
-        app:layout_constraintVertical_bias="1.0" />
-
-    <EditText
-        android:id="@+id/confirm_password"
-        android:layout_width="150dp"
-        android:layout_height="40dp"
-        android:ems="10"
-        android:inputType="textPassword"
-        app:layout_constraintBottom_toTopOf="@+id/add_photo_button"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.877"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <Button
-        android:id="@+id/button2"
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:backgroundTint="#534A4A"
-        android:text="Register"
-        android:textColor="@color/white"
-        android:textSize="15sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintHorizontal_bias="0.503"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.878" />
-
-    <Button
-        android:id="@+id/navToLogin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:background="@android:color/transparent"
+        android:gravity="center"
+        android:orientation="vertical"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.53"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        app:layout_constraintTop_toTopOf="parent">
 
-    <ImageView
-        android:id="@+id/photo_image_view"
-        android:layout_width="170dp"
-        android:layout_height="164dp"
-        android:layout_gravity="center"
-        android:contentDescription="Photo"
-        android:scaleType="centerCrop"
-        android:src="@drawable/default_img"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.497"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.755" />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="casual"
+            android:text="@string/register_title"
+            android:textColor="@color/black"
+            android:textSize="50sp"
+            android:textStyle="bold"
+            android:layout_marginBottom="@dimen/fab_margin" />
 
-    <Button
-        android:id="@+id/add_photo_button"
-        android:layout_width="221dp"
-        android:layout_height="31dp"
-        android:layout_marginTop="340dp"
-        android:background="@android:color/transparent"
-        android:padding="0dp"
-        android:text="Click To Choose Profile Picture"
-        android:fontFamily="daharti-tembel"
-        android:textColor="@color/black"
-        android:textStyle="bold"
-        app:layout_constraintBottom_toTopOf="@+id/button2"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintVertical_bias="0.0" />
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
 
-    <Button
-        android:id="@+id/navToRegister"
-        android:layout_width="82dp"
-        android:layout_height="24dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginBottom="48dp"
-        android:background="@android:color/transparent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.632"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/button2"
-        app:layout_constraintVertical_bias="1.0" />
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center"
+                android:layout_marginEnd="@dimen/fab_margin">
 
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:text="@string/username_tag"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
 
+                <EditText
+                    android:id="@+id/loginUsername"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:hint="@string/username_hint"
+                    android:inputType="textPersonName"
+                    android:textColor="@color/black"
+                    android:textColorHighlight="#000000"
+                    android:textColorHint="#656262"
+                    android:textColorLink="#131313"
+                    tools:ignore="TextContrastCheck"
+                    android:importantForAutofill="no" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:text="@string/display_name_tag"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/displayName"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:hint="@string/display_name_hint"
+                    android:inputType="textPassword"
+                    android:textColor="#070707"
+                    android:textColorHighlight="#121111"
+                    android:textColorHint="#656262"
+                    android:textColorLink="#070707"
+                    tools:ignore="Autofill,TextContrastCheck" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:text="@string/password_tag"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/loginPassword"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:hint="@string/password_hint"
+                    android:inputType="textPassword"
+                    android:textColor="#070707"
+                    android:textColorHighlight="#121111"
+                    android:textColorHint="#656262"
+                    android:textColorLink="#070707"
+                    tools:ignore="TextContrastCheck"
+                    android:importantForAutofill="no" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/fab_margin"
+                    android:fontFamily="casual"
+                    android:gravity="center"
+                    android:text="@string/confirm_password_tag"
+                    android:textColor="@color/black"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <EditText
+                    android:id="@+id/confirmPassword"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="casual"
+                    android:hint="@string/confirm_password_hint"
+                    android:inputType="textPassword"
+                    android:textColor="#070707"
+                    android:textColorHighlight="#121111"
+                    android:textColorHint="#656262"
+                    android:textColorLink="#070707"
+                    tools:ignore="TextContrastCheck"
+                    android:importantForAutofill="no" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <Button
+            android:id="@+id/uploadImg"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:fontFamily="casual"
+            android:text="@string/upload_photo_btn"
+            android:textSize="18sp"
+            android:textColor="@color/black"
+            android:textStyle="bold"
+            android:layout_marginTop="@dimen/fab_margin" />
+
+        <ImageView
+            android:id="@+id/photo_image_view"
+            android:layout_width="170dp"
+            android:layout_height="164dp"
+            android:layout_gravity="center"
+            android:layout_marginBottom="@dimen/fab_margin"
+            android:clickable="true"
+            android:scaleType="centerCrop"
+            android:src="@drawable/default_img"
+            tools:ignore="SpeakableTextPresentCheck"
+            android:contentDescription="@string/profile_picture"
+            android:focusable="true" />
+
+        <Button
+            android:id="@+id/show_list_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/fab_margin"
+            android:backgroundTint="#534A4A"
+            android:fontFamily="casual"
+            android:text="@string/registerBtn"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            android:textStyle="bold" />
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="horizontal"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/already_registered"
+                android:textColor="@color/black" />
+
+            <Button
+                android:id="@+id/navToLogin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="monospace"
+                android:text="@string/click_here_link"
+                android:textColor="@color/black"
+                android:padding="3dp" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:fontFamily="monospace"
+                android:text="@string/to_login"
+                android:textColor="@color/black" />
+        </LinearLayout>
+    </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>
