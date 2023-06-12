@@ -85,12 +85,12 @@
                     android:fontFamily="casual"
                     android:gravity="center"
                     android:hint="@string/display_name_hint"
-                    android:inputType="textPassword"
                     android:textColor="#070707"
                     android:textColorHighlight="#121111"
                     android:textColorHint="#656262"
                     android:textColorLink="#070707"
-                    tools:ignore="Autofill,TextContrastCheck" />
+                    tools:ignore="Autofill,TextContrastCheck"
+                    android:inputType="text" />
             </LinearLayout>
 
             <LinearLayout
@@ -143,6 +143,7 @@
                     android:hint="@string/confirm_password_hint"
                     android:inputType="textPassword"
                     android:textColor="#070707"
+                    android:gravity="center"
                     android:textColorHighlight="#121111"
                     android:textColorHint="#656262"
                     android:textColorLink="#070707"
