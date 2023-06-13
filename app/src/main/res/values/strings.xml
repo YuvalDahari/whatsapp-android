@@ -21,4 +21,7 @@
     <string name="profile_picture">profile picture</string>
     <string name="enter_your_message_here">Enter your message here..</string>
     <string name="dummy_msg">This is a message</string>
+    <string name="search_or_create_a_new_chat">Search or create a new chat</string>
+    <string name="user_name">User Name</string>
+    <string name="new_message">new message</string>
 </resources>

@@ -41,7 +41,7 @@
                     android:textSize="30sp"
                     android:textStyle="bold"
                     android:fontFamily="casual"
-                    tools:text="User Name" />
+                    tools:text="@string/user_name" />
 
                 <TextView
                     android:id="@+id/last_massage"
@@ -50,7 +50,7 @@
                     android:layout_marginTop="3dp"
                     android:textColor="@color/black"
                     android:textSize="20sp"
-                    tools:text="new message"
+                    tools:text="@string/new_message"
                     android:textStyle="bold"
                     android:fontFamily="casual"
                     />
