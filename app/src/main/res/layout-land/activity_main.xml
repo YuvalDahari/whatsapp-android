@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,12 +20,13 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginBottom="10dp"
             android:fontFamily="casual"
             android:text="@string/login_title"
-            android:textColor="@color/black"
+            android:textColor="@color/textColor"
             android:textSize="45sp"
             android:textStyle="bold" />
 
@@ -41,14 +43,14 @@
                 android:layout_marginEnd="@dimen/fab_margin">
 
                 <TextView
+                    android:id="@+id/usernameTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:gravity="center"
                     android:layout_marginBottom="5dp"
-
                     android:text="@string/username_tag"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColor"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -61,10 +63,8 @@
                     android:gravity="center"
                     android:hint="@string/username_hint"
                     android:inputType="textPersonName"
-                    android:textColor="@color/black"
-                    android:textColorHighlight="#000000"
-                    android:textColorHint="#656262"
-                    android:textColorLink="#131313"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
                     tools:ignore="TextContrastCheck" />
 
             </LinearLayout>
@@ -75,13 +75,14 @@
                 android:orientation="vertical">
 
                 <TextView
+                    android:id="@+id/passwordTag"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:fontFamily="casual"
                     android:gravity="center"
                     android:layout_marginBottom="5dp"
                     android:text="@string/password_tag"
-                    android:textColor="@color/black"
+                    android:textColor="@color/textColor"
                     android:textSize="18sp"
                     android:textStyle="bold" />
 
@@ -94,10 +95,8 @@
                     android:hint="@string/password_hint"
                     android:importantForAutofill="no"
                     android:inputType="textPassword"
-                    android:textColor="#070707"
-                    android:textColorHighlight="#121111"
-                    android:textColorHint="#656262"
-                    android:textColorLink="#070707"
+                    android:textColor="@color/textColor"
+                    android:textColorHint="@color/hintColor"
                     tools:ignore="TextContrastCheck" />
 
             </LinearLayout>
@@ -123,12 +122,13 @@
             android:orientation="horizontal">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/bottomCommentP1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="@string/not_registered"
-                android:textColor="@color/black" />
+                android:textColor="@color/textColor"
+                />
 
             <Button
                 android:id="@+id/navToRegister"
@@ -138,7 +138,7 @@
                 android:fontFamily="monospace"
                 android:padding="3dp"
                 android:text="@string/click_here_link"
-                android:textColor="@color/black"
+                android:textColor="@color/textColor"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.53"
@@ -147,11 +147,12 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:id="@+id/bottomCommentP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
                 android:text="@string/to_login"
-                android:textColor="@color/black" />
+                android:textColor="@color/textColor" />
         </LinearLayout>
     </LinearLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

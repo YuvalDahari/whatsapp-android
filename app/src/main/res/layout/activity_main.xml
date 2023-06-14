@@ -9,6 +9,7 @@
     tools:context=".MainActivity">
 
     <LinearLayout
+        android:id="@+id/mainLayout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
@@ -19,6 +20,7 @@
         app:layout_constraintTop_toTopOf="parent">
 
         <TextView
+            android:id="@+id/loginTitle"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -29,6 +31,7 @@
             android:layout_marginBottom="@android:dimen/notification_large_icon_height" />
 
         <TextView
+            android:id="@+id/usernameTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -48,12 +51,11 @@
             android:hint="@string/username_hint"
             android:inputType="textPersonName"
             android:textColor="@color/textColor"
-            android:textColorHighlight="#000000"
-            android:textColorHint="#656262"
-            android:textColorLink="#131313"
+            android:textColorHint="@color/hintColor"
             tools:ignore="TextContrastCheck" />
 
         <TextView
+            android:id="@+id/passwordTag"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:fontFamily="casual"
@@ -73,8 +75,7 @@
             android:hint="@string/password_hint"
             android:importantForAutofill="no"
             android:textColor="@color/textColor"
-            android:textColorHighlight="#121111"
-            android:textColorHint="#656262"
+            android:textColorHint="@color/hintColor"
             tools:ignore="TextContrastCheck"
             android:inputType="textPassword" />
 
@@ -83,7 +84,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="@dimen/fab_margin"
-            android:backgroundTint="#534A4A"
+            android:backgroundTint="@color/btn"
             android:fontFamily="casual"
             android:text="@string/loginBtn"
             android:textColor="@color/white"
@@ -97,7 +98,7 @@
             android:gravity="center">
 
             <TextView
-                android:id="@+id/textView3"
+                android:id="@+id/bottomCommentP1"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"
@@ -121,6 +122,7 @@
                 app:layout_constraintVertical_bias="0.0" />
 
             <TextView
+                android:id="@+id/bottomCommentP2"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="monospace"

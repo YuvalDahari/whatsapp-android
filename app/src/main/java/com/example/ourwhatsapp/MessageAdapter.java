@@ -1,10 +1,12 @@
 package com.example.ourwhatsapp;
 
 import android.content.Context;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import java.util.List;
@@ -29,14 +31,17 @@ public class MessageAdapter extends ArrayAdapter<Message> {
 
         TextView msgTextView = convertView.findViewById(R.id.msg);
         TextView timeTextView = convertView.findViewById(R.id.time);
+        LinearLayout linearLayout = convertView.findViewById(R.id.mainLayout);
 
         msgTextView.setText(message.getContent());
         timeTextView.setText(message.getTime());
 
         int backgroundResId;
         if (message.getMessageType() == Message.MessageType.SENT) {
+            linearLayout.setGravity(Gravity.END);
             backgroundResId = R.drawable.send_chat_bubble_background;
         } else {
+            linearLayout.setGravity(Gravity.START);
             backgroundResId = R.drawable.get_chat_bubble_background;
         }
 

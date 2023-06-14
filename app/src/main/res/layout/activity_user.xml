@@ -4,9 +4,10 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".UserActivity"
+    android:background="@drawable/wallpaper"
+    android:backgroundTintMode="src_atop"
     android:orientation="vertical"
-    android:background="@drawable/wallpaper">
+    tools:context=".UserActivity">
 
     <LinearLayout
         android:id="@+id/topPanel"
@@ -23,19 +24,30 @@
             android:layout_width="45dp"
             android:layout_height="45dp"
             android:layout_margin="14dp"
-            tools:src="@drawable/default_img"
-            android:contentDescription="@string/profile_picture" />
+            android:contentDescription="@string/profile_picture"
+            tools:src="@drawable/default_img" />
 
         <TextView
             android:id="@+id/user_text_user_name"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_marginTop="15dp"
             android:fontFamily="casual"
+            android:layout_weight="1"
+
             android:textColor="@color/textColor"
             android:textSize="30sp"
             android:textStyle="bold"
             tools:text="@string/user_name" />
+
+        <Button
+            android:id="@+id/closeBtn"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_margin="14dp"
+            android:background="@drawable/ic_back"
+            tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
+
     </LinearLayout>
 
     <ListView
@@ -43,18 +55,18 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_marginTop="5dp"
-        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
-        app:layout_constraintTop_toBottomOf="@+id/topPanel"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
         android:stackFromBottom="true"
-        tools:listitem="@layout/custom_messages_item"/>
+        app:layout_constraintBottom_toTopOf="@+id/bottomPanel"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/topPanel"
+        tools:listitem="@layout/custom_messages_item" />
 
     <LinearLayout
         android:id="@+id/bottomPanel"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/white"
+        android:layout_height="40dp"
+        android:background="@color/boxBackground"
         android:gravity="end"
         android:orientation="horizontal"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -63,8 +75,9 @@
         <EditText
             android:id="@+id/messageEditText"
             android:layout_width="0dp"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:layout_weight="1"
+            android:background="@color/boxBackground"
             android:fontFamily="casual"
             android:hint="@string/enter_your_message_here"
             android:importantForAutofill="no"
@@ -77,8 +90,9 @@
             android:layout_width="30dp"
             android:layout_height="30dp"
             android:layout_gravity="bottom"
-            android:layout_margin="3dp"
+            android:layout_marginBottom="2dp"
             android:background="@drawable/ic_send"
+            android:backgroundTint="@color/boxBackground"
             android:padding="0dp"
             tools:ignore="SpeakableTextPresentCheck,TouchTargetSizeCheck" />
     </LinearLayout>
