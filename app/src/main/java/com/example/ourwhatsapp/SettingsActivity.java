@@ -15,7 +15,7 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_settings);
 
         exitButton = findViewById(R.id.exitBtn);
-
         exitButton.setOnClickListener(view -> finish());
     }
 }
+

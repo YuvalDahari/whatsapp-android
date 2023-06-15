@@ -34,4 +34,14 @@
         <string name="current_password">סיסמה נוכחית</string>
         <string name="settings">הגדרות</string>
         <string name="update_photo_btn">החלפת\nתמונת פרופיל</string>
+        <string name="language">שפה:</string>
+        <string name="theme">ערכת נושא:</string>
+        <string-array name="language_options">
+                <item>אנגלית</item>
+                <item>עברית</item>
+        </string-array>
+        <string-array name="theme_options">
+                <item>קלאסי</item>
+                <item>כהה</item>
+        </string-array>
 </resources>

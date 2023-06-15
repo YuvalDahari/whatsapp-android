@@ -34,4 +34,14 @@
     <string name="current_password">current password</string>
     <string name="settings">Settings</string>
     <string name="update_photo_btn">Update\nProfile Picture</string>
+    <string name="language">Language:</string>
+    <string name="theme">Theme:</string>
+    <string-array name="language_options">
+        <item>English</item>
+        <item>Hebrew</item>
+    </string-array>
+    <string-array name="theme_options">
+        <item>Classic</item>
+        <item>Dark</item>
+    </string-array>
 </resources>
