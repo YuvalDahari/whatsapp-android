@@ -28,7 +28,7 @@
             android:textColor="@color/textColor"
             android:textSize="45sp"
             android:textStyle="bold"
-            android:layout_marginBottom="@android:dimen/notification_large_icon_height" />
+            android:layout_marginBottom="@dimen/fab_margin" />
 
         <TextView
             android:id="@+id/usernameTag"

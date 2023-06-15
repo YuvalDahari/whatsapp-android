@@ -2,6 +2,7 @@ package com.example.ourwhatsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ListView;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -29,6 +30,10 @@ public class ListActivity extends AppCompatActivity {
 
     ListView listView;
     CustomListAdapter adapter;
+
+    Button addButton;
+
+    Button settingsButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,5 +67,20 @@ public class ListActivity extends AppCompatActivity {
 
             startActivity(intent);
         });
+
+        addButton = findViewById(R.id.addBtn);
+
+        addButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), AddNewChatActivity.class);
+            startActivity(intent);
+        });
+
+        settingsButton = findViewById(R.id.settingsBtn);
+
+        settingsButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        });
+
     }
 }

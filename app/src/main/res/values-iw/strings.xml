@@ -21,7 +21,17 @@
         <string name="profile_picture">תמונת פרופיל</string>
         <string name="enter_your_message_here">הקלד הודעה כאן..</string>
         <string name="dummy_msg">זו היא הודעה</string>
-    <string name="search_or_create_a_new_chat">חפש או צור צ\'אט חדש</string>
+        <string name="search_or_create_a_new_chat">חפש או צור צ\'אט חדש</string>
         <string name="user_name">שם משתמש</string>
         <string name="new_message">הודעה חדשה</string>
+        <string name="add_new_chat">חבר חדש לרשימה?\nבוא נוסיף אותו</string>
+        <string name="cancelBtn">ביטול</string>
+        <string name="exitBtn">יציאה</string>
+        <string name="current_username">שם משתמש נוכחי</string>
+        <string name="current_display_name">שם תצוגה נוכחי</string>
+        <string name="server_port">פורט השרת:</string>
+        <string name="current_server_port">פורט נוכחי</string>
+        <string name="current_password">סיסמה נוכחית</string>
+        <string name="settings">הגדרות</string>
+        <string name="update_photo_btn">החלפת\nתמונת פרופיל</string>
 </resources>

@@ -24,4 +24,14 @@
     <string name="search_or_create_a_new_chat">Search or create a new chat</string>
     <string name="user_name">User Name</string>
     <string name="new_message">new message</string>
+    <string name="add_new_chat">Got a new friend?\nLet\'s add him!</string>
+    <string name="cancelBtn">Cancel</string>
+    <string name="exitBtn">Exit</string>
+    <string name="current_username">current username</string>
+    <string name="current_display_name">current display name</string>
+    <string name="server_port">Server Port:</string>
+    <string name="current_server_port">current server port</string>
+    <string name="current_password">current password</string>
+    <string name="settings">Settings</string>
+    <string name="update_photo_btn">Update\nProfile Picture</string>
 </resources>

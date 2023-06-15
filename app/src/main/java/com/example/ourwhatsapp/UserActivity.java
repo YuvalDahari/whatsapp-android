@@ -2,6 +2,7 @@ package com.example.ourwhatsapp;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
@@ -15,6 +16,8 @@ public class UserActivity extends AppCompatActivity {
 
     ImageView profilePictureView;
     TextView userNameView;
+
+    Button retButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,5 +44,9 @@ public class UserActivity extends AppCompatActivity {
             MessageAdapter adapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
             listView.setAdapter(adapter);
         }
+
+        retButton = findViewById(R.id.returnBtn);
+
+        retButton.setOnClickListener(view -> finish());
     }
 }
