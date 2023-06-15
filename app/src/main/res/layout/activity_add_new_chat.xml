@@ -37,7 +37,7 @@
             <EditText
                 android:id="@+id/displayName"
                 android:layout_width="wrap_content"
-                android:layout_height="55dp"
+                android:layout_height="58dp"
                 android:layout_marginTop="7dp"
                 android:fontFamily="casual"
                 android:gravity="center"
