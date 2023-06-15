@@ -36,6 +36,7 @@
     <string name="update_photo_btn">Update\nProfile Picture</string>
     <string name="language">Language:</string>
     <string name="theme">Theme:</string>
+    <string name="app_name" translatable="false">OurWhatsapp</string>
     <string-array name="language_options">
         <item>English</item>
         <item>Hebrew</item>
