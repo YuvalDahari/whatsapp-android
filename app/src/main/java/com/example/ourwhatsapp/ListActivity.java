@@ -1,12 +1,11 @@
 package com.example.ourwhatsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ListView;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 import java.util.ArrayList;
 
@@ -32,6 +31,10 @@ public class ListActivity extends AppCompatActivity {
     ListView listView;
     CustomListAdapter adapter;
 
+    Button addButton;
+
+    Button settingsButton;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -54,18 +57,30 @@ public class ListActivity extends AppCompatActivity {
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
-        listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
-            @Override
-            public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-                Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+        listView.setOnItemClickListener((adapterView, view, i, l) -> {
+            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
 
-                intent.putExtra("userName", userNames[i]);
-                intent.putExtra("profilePicture", profilePictures[i]);
-                intent.putExtra("lastMassage", lastMassages[i]);
-                intent.putExtra("time", times[i]);
+            intent.putExtra("userName", userNames[i]);
+            intent.putExtra("profilePicture", profilePictures[i]);
+            intent.putExtra("lastMassage", lastMassages[i]);
+            intent.putExtra("time", times[i]);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
+
+        addButton = findViewById(R.id.addBtn);
+
+        addButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), AddNewChatActivity.class);
+            startActivity(intent);
+        });
+
+        settingsButton = findViewById(R.id.settingsBtn);
+
+        settingsButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
+        });
+
     }
 }

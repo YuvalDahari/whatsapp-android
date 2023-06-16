@@ -26,9 +26,8 @@
             android:fontFamily="casual"
             android:text="@string/register_title"
             android:textColor="@color/textColor"
-            android:textSize="50sp"
-            android:textStyle="bold"
-            android:layout_marginBottom="@dimen/fab_margin" />
+            android:textSize="40sp"
+            android:textStyle="bold" />
 
         <LinearLayout
             android:layout_width="wrap_content"
@@ -143,42 +142,48 @@
                     android:inputType="textPassword"
                     android:textColor="@color/textColor"
                     android:gravity="center"
+                    android:textColorHighlight="#121111"
                     android:textColorHint="@color/hintColor"
                     tools:ignore="TextContrastCheck"
                     android:importantForAutofill="no" />
             </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/uploadImg"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@android:color/transparent"
+                    android:fontFamily="casual"
+                    android:text="@string/upload_photo_btn"
+                    android:textSize="18sp"
+                    android:textColor="@color/textColor"
+                    android:textStyle="bold" />
+
+                <ImageView
+                    android:id="@+id/photo_image_view"
+                    android:layout_width="170dp"
+                    android:layout_height="164dp"
+                    android:layout_gravity="center"
+                    android:clickable="true"
+                    android:scaleType="centerCrop"
+                    android:src="@drawable/default_img"
+                    tools:ignore="SpeakableTextPresentCheck"
+                    android:contentDescription="@string/profile_picture"
+                    android:focusable="true" />
+            </LinearLayout>
         </LinearLayout>
-
-        <Button
-            android:id="@+id/uploadImg"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:background="@android:color/transparent"
-            android:fontFamily="casual"
-            android:text="@string/upload_photo_btn"
-            android:textSize="18sp"
-            android:textColor="@color/textColor"
-            android:textStyle="bold"
-            android:layout_marginTop="@dimen/fab_margin" />
-
-        <ImageView
-            android:id="@+id/photo_image_view"
-            android:layout_width="170dp"
-            android:layout_height="164dp"
-            android:layout_gravity="center"
-            android:layout_marginBottom="@dimen/fab_margin"
-            android:clickable="true"
-            android:scaleType="centerCrop"
-            android:src="@drawable/default_img"
-            tools:ignore="SpeakableTextPresentCheck"
-            android:contentDescription="@string/profile_picture"
-            android:focusable="true" />
 
         <Button
             android:id="@+id/show_list_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/fab_margin"
+            android:layout_marginTop="10dp"
             android:backgroundTint="@color/btn"
             android:fontFamily="casual"
             android:text="@string/registerBtn"

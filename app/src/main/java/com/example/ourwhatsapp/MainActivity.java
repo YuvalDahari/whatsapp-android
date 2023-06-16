@@ -1,16 +1,17 @@
 package com.example.ourwhatsapp;
 
-import androidx.appcompat.app.AppCompatActivity;
-
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
 
 public class MainActivity extends AppCompatActivity {
 
     Button showListButton;
     Button registerPage;
+    Button settingButton;
+    Button settingPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,25 +20,30 @@ public class MainActivity extends AppCompatActivity {
 
         showListButton = findViewById(R.id.show_list_button);
 
-        showListButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), ListActivity.class);
-
-                startActivity(intent);
-            }
+        showListButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+            startActivity(intent);
         });
 
         registerPage = findViewById(R.id.navToRegister);
 
-        registerPage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+        registerPage.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
+        });
 
-                startActivity(intent);
-            }
+        settingButton = findViewById(R.id.settingsBtn);
+
+        settingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
+            startActivity(intent);
+        });
+
+        settingPage = findViewById(R.id.navToMiniSettings);
+
+        settingPage.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
+            startActivity(intent);
         });
     }
-
 }
