@@ -44,4 +44,5 @@
                 <item>קלאסי</item>
                 <item>כהה</item>
         </string-array>
+        <string name="login_to_see_more_options">התחבר כדי לראות אפשרויות נוספות</string>
 </resources>

@@ -37,6 +37,7 @@
     <string name="language">Language:</string>
     <string name="theme">Theme:</string>
     <string name="app_name" translatable="false">OurWhatsapp</string>
+    <string name="login_to_see_more_options">Login to see more options</string>
     <string-array name="language_options">
         <item>English</item>
         <item>Hebrew</item>

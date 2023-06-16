@@ -10,6 +10,8 @@ public class MainActivity extends AppCompatActivity {
 
     Button showListButton;
     Button registerPage;
+    Button settingButton;
+    Button settingPage;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -27,6 +29,20 @@ public class MainActivity extends AppCompatActivity {
 
         registerPage.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), RegisterActivity.class);
+            startActivity(intent);
+        });
+
+        settingButton = findViewById(R.id.settingsBtn);
+
+        settingButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
+            startActivity(intent);
+        });
+
+        settingPage = findViewById(R.id.navToMiniSettings);
+
+        settingPage.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
             startActivity(intent);
         });
     }
