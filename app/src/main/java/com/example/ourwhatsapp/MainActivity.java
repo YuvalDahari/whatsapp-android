@@ -5,6 +5,12 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.ViewModelProvider;
+
+import com.example.ourwhatsapp.Activities.Messages.ListActivity;
+import com.example.ourwhatsapp.Activities.Register.RegisterActivity;
+import com.example.ourwhatsapp.Activities.Settings.MiniSettingsActivity;
+import com.example.ourwhatsapp.ViewModals.SettingsViewModal;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -13,8 +19,11 @@ public class MainActivity extends AppCompatActivity {
     Button settingButton;
     Button settingPage;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 

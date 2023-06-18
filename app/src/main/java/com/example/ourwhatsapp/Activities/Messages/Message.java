@@ -1,4 +1,4 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Messages;
 
 public class Message {
     private final String content;

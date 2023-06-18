@@ -1,20 +1,20 @@
 package com.example.ourwhatsapp;
 
 public class User {
-    private String userName;
-    private int pictureId;
-    private String lastMassage;
-    private String lastMassageSendingTime;
+    private final String userName;
+    private final String profilePicture;
+    private final String lastMassage;
+    private final String lastMassageSendingTime;
 
-    public User(String userName, int pictureId, String lastMassage, String lastMassageSendingTime) {
+    public User(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime) {
         this.userName = userName;
-        this.pictureId = pictureId;
+        this.profilePicture = profilePicture;
         this.lastMassage = lastMassage;
         this.lastMassageSendingTime = lastMassageSendingTime;
     }
 
-    public int getPictureId() {
-        return pictureId;
+    public String getProfilePicture() {
+        return profilePicture;
     }
 
     public String getLastMassage() {

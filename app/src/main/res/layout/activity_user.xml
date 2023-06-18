@@ -7,7 +7,7 @@
     android:background="@drawable/wallpaper"
     android:backgroundTintMode="src_atop"
     android:orientation="vertical"
-    tools:context=".UserActivity">
+    tools:context=".Activities.Messages.UserActivity">
 
     <LinearLayout
         android:id="@+id/topPanel"

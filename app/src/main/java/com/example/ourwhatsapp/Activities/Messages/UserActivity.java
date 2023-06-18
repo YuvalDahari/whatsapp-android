@@ -1,4 +1,4 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -8,6 +8,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ourwhatsapp.R;
 
 import java.util.ArrayList;
 import java.util.List;
