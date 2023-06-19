@@ -1,9 +1,11 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Messages;
 
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ourwhatsapp.R;
 
 public class AddNewChatActivity extends AppCompatActivity {
     Button cancelButton;

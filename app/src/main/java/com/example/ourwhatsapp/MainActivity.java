@@ -6,6 +6,10 @@ import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.example.ourwhatsapp.Activities.Conversations.ConversationsActivity;
+import com.example.ourwhatsapp.Activities.Register.RegisterActivity;
+import com.example.ourwhatsapp.Activities.Settings.MiniSettingsActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     Button showListButton;
@@ -13,15 +17,18 @@ public class MainActivity extends AppCompatActivity {
     Button settingButton;
     Button settingPage;
 
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         showListButton = findViewById(R.id.show_list_button);
 
         showListButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ConversationsActivity.class);
             startActivity(intent);
         });
 

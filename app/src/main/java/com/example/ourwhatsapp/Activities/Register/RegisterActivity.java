@@ -1,10 +1,13 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Register;
 
 import android.content.Intent;
 import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ourwhatsapp.MainActivity;
+import com.example.ourwhatsapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
 

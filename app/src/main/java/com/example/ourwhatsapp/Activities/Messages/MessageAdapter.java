@@ -1,4 +1,4 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Context;
 import android.view.Gravity;
@@ -8,6 +8,8 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import com.example.ourwhatsapp.R;
 
 import java.util.List;
 
