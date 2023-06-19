@@ -1,4 +1,4 @@
-.idea/
+.idea
 *.iml
 .gradle
 /local.properties
@@ -8,9 +8,12 @@
 /.idea/workspace.xml
 /.idea/navEditor.xml
 /.idea/assetWizardSettings.xml
+app/build
 .DS_Store
 /build
 /captures
 .externalNativeBuild
 .cxx
 local.properties
+/app/src/androidTest/java/com/example/ourwhatsapp/ExampleInstrumentedTest.java
+/app/src/test/java/com/example/ourwhatsapp/ExampleUnitTest.java

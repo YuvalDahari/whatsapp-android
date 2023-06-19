@@ -1,11 +1,13 @@
-package com.example.ourwhatsapp;
-
-import androidx.appcompat.app.AppCompatActivity;
+package com.example.ourwhatsapp.Activities.Register;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
 import android.widget.Button;
+
+import androidx.appcompat.app.AppCompatActivity;
+
+import com.example.ourwhatsapp.MainActivity;
+import com.example.ourwhatsapp.R;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -18,13 +20,10 @@ public class RegisterActivity extends AppCompatActivity {
 
         loginButton = findViewById(R.id.navToLogin);
 
-        loginButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Intent intent = new Intent(getApplicationContext(), MainActivity.class);
+        loginButton.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), MainActivity.class);
 
-                startActivity(intent);
-            }
+            startActivity(intent);
         });
     }
 }

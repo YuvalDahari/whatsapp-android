@@ -1,3 +1,4 @@
+<?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -7,9 +8,11 @@
 
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="133dp">
+        android:layout_height="133dp"
+        tools:ignore="UselessParent">
 
         <LinearLayout
+            android:id="@+id/mainLayout"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginVertical="10dp"
@@ -20,7 +23,9 @@
                 android:layout_width="80dp"
                 android:layout_height="80dp"
                 android:layout_marginStart="20dp"
-                tools:src="@drawable/default_img" />
+                tools:src="@drawable/default_img"
+                android:layout_marginTop="20dp"
+                android:contentDescription="@string/profile_picture" />
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -33,19 +38,23 @@
                     android:id="@+id/user_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black"
-                    android:textSize="25dp"
+                    android:textColor="@color/textColor"
+                    android:textSize="30sp"
                     android:textStyle="bold"
-                    tools:text="User Name" />
+                    android:fontFamily="casual"
+                    tools:text="@string/user_name" />
 
                 <TextView
                     android:id="@+id/last_massage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="3dp"
-                    android:textColor="@color/black"
-                    android:textSize="17dp"
-                    tools:text="new message" />
+                    android:textColor="@color/textColor"
+                    android:textSize="20sp"
+                    tools:text="@string/new_message"
+                    android:textStyle="bold"
+                    android:fontFamily="casual"
+                    />
 
             </LinearLayout>
 
@@ -55,10 +64,11 @@
             android:id="@+id/time"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"
             android:padding="15dp"
-            android:textColor="@color/black"
-            android:textSize="15dp"
+            android:textColor="@color/textColor"
+            android:textSize="15sp"
+            tools:ignore="RelativeOverlap,TextSizeCheck"
             tools:text="10:00" />
 
     </RelativeLayout>
