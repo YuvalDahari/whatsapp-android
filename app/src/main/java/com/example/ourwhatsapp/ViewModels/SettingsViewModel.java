@@ -1,9 +1,9 @@
-package com.example.ourwhatsapp.ViewModals;
+package com.example.ourwhatsapp.ViewModels;
 
 import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
-public class SettingsViewModal extends ViewModel {
+public class SettingsViewModel extends ViewModel {
     private MutableLiveData<String> profilePicture;
     private MutableLiveData<String> displayName;
     private MutableLiveData<String> serverURL;

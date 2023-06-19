@@ -15,13 +15,13 @@ import com.example.ourwhatsapp.Activities.Messages.AddNewChatActivity;
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
 import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
-import com.example.ourwhatsapp.ViewModals.ConversationsViewModal;
+import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationsActivity extends AppCompatActivity {
-    private ConversationsViewModal viewModel;
+    private ConversationsViewModel viewModel;
 
     final private Conversation conversation1 = new Conversation("Yuval Dahari", imageToBase64(this, R.drawable.yuval),
             "Great JOB!", "12:00");
@@ -48,7 +48,7 @@ public class ConversationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_list);
-        viewModel = new ViewModelProvider(this).get(ConversationsViewModal.class);
+        viewModel = new ViewModelProvider(this).get(ConversationsViewModel.class);
 
         conversations = new ArrayList<>();
         conversations.add(conversation1);

@@ -11,13 +11,13 @@ import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ourwhatsapp.R;
-import com.example.ourwhatsapp.ViewModals.SettingsViewModal;
+import com.example.ourwhatsapp.ViewModels.SettingsViewModel;
 import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
 
 
 
 public class SettingsActivity extends AppCompatActivity {
-    private SettingsViewModal viewModel;
+    private SettingsViewModel viewModel;
     private ActivitySettingsBinding binding;
 
     Button exitButton;
@@ -25,7 +25,7 @@ public class SettingsActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SettingsViewModal.class);
+        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
 
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());

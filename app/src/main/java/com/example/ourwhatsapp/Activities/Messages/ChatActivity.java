@@ -2,23 +2,22 @@ package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ImageView;
 import android.widget.ListView;
-import android.widget.TextView;
-
 import androidx.appcompat.app.AppCompatActivity;
-
+import androidx.lifecycle.Observer;
+import androidx.lifecycle.ViewModelProvider;
 import com.example.ourwhatsapp.R;
+import com.example.ourwhatsapp.Utils;
+import com.example.ourwhatsapp.ViewModels.ChatViewModel;
+import com.example.ourwhatsapp.databinding.ActivityChatBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ChatActivity extends AppCompatActivity {
 
-    private ImageView profilePictureView;
-    private TextView userNameView;
-    private Button retButton;
+    private ChatViewModel viewModel;
+    private ActivityChatBinding binding;
     private MessageAdapter messageAdapter;
     private List<Message> messages;
 
@@ -26,18 +25,45 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+        viewModel = new ViewModelProvider(this).get(ChatViewModel.class);
 
-        profilePictureView = findViewById(R.id.user_image_profile_image);
-        userNameView = findViewById(R.id.user_text_user_name);
+        binding = ActivityChatBinding.inflate(getLayoutInflater());
+        setContentView(binding.getRoot());
+
+        viewModel.getProfilePicture().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String profilePicture) {
+                Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
+            }
+        });
+
+        viewModel.getDisplayName().observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String displayName) {
+                binding.userTextUserName.setText(displayName);
+            }
+        });
+
+        viewModel.getChat().observe(this, new Observer<List<Message>>() {
+            @Override
+            public void onChanged(List<Message> newMessages) {
+                messages.clear();
+                messages.addAll(newMessages);
+                messageAdapter.notifyDataSetChanged();
+            }
+        });
+
 
         Intent activityIntent = getIntent();
 
         if (activityIntent != null) {
             String userName = activityIntent.getStringExtra("userName");
-            int profilePicture = activityIntent.getIntExtra("profilePicture", R.drawable.blue);
+            String profilePicture = activityIntent.getStringExtra("profilePicture");
 
-            profilePictureView.setImageResource(profilePicture);
-            userNameView.setText(userName);
+            viewModel.getDisplayName().setValue(userName);
+
+            Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
+            binding.userTextUserName.setText(userName);
 
             messages = new ArrayList<>();
             messages.add(new Message("Hello", "10:00", Message.MessageType.SENT));
@@ -48,8 +74,6 @@ public class ChatActivity extends AppCompatActivity {
             listView.setAdapter(messageAdapter);
         }
 
-        retButton = findViewById(R.id.returnBtn);
-
-        retButton.setOnClickListener(view -> finish());
+        binding.returnBtn.setOnClickListener(view -> finish());
     }
 }
