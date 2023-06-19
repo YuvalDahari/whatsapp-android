@@ -1,4 +1,4 @@
-package com.example.ourwhatsapp.Activities.Messages;
+package com.example.ourwhatsapp.Activities.Conversations;
 
 import static com.example.ourwhatsapp.Utils.imageToBase64;
 
@@ -11,36 +11,34 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ourwhatsapp.CustomListAdapter;
+import com.example.ourwhatsapp.Activities.Messages.AddNewChatActivity;
+import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
 import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
-import com.example.ourwhatsapp.User;
 import com.example.ourwhatsapp.ViewModals.ConversationsViewModal;
-import com.example.ourwhatsapp.ViewModals.SettingsViewModal;
-import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class ListActivity extends AppCompatActivity {
+public class ConversationsActivity extends AppCompatActivity {
     private ConversationsViewModal viewModel;
 
-    final private User user1 = new User("Yuval Dahari", imageToBase64(this, R.drawable.yuval),
+    final private Conversation conversation1 = new Conversation("Yuval Dahari", imageToBase64(this, R.drawable.yuval),
             "Great JOB!", "12:00");
 
-    final private User user2 = new User("Eliyahu Houri", imageToBase64(this, R.drawable.eliyahu),
+    final private Conversation conversation2 = new Conversation("Eliyahu Houri", imageToBase64(this, R.drawable.eliyahu),
             "I have to study", "00:30");
 
-    final private User user3 = new User("Yehonatan Calinsky", imageToBase64(this, R.drawable.yonatan),
+    final private Conversation conversation3 = new Conversation("Yehonatan Calinsky", imageToBase64(this, R.drawable.yonatan),
             "Why the hell did you start?", "03:23");
 
-    final private User user4 = new User("Gal Kaminka", imageToBase64(this, R.drawable.gal),
+    final private Conversation conversation4 = new Conversation("Gal Kaminka", imageToBase64(this, R.drawable.gal),
             "MICROSOFT!", "08:59");
 
     ListView listView;
-    CustomListAdapter adapter;
+    ConversationsAdapter adapter;
 
-    private ArrayList<User> users;
+    private ArrayList<Conversation> conversations;
 
     Button addButton;
 
@@ -52,34 +50,34 @@ public class ListActivity extends AppCompatActivity {
         setContentView(R.layout.activity_list);
         viewModel = new ViewModelProvider(this).get(ConversationsViewModal.class);
 
-        users = new ArrayList<>();
-        users.add(user1);
-        users.add(user2);
-        users.add(user3);
-        users.add(user4);
+        conversations = new ArrayList<>();
+        conversations.add(conversation1);
+        conversations.add(conversation2);
+        conversations.add(conversation3);
+        conversations.add(conversation4);
 
-        viewModel.getUsers().observe(this, new Observer<List<User>>() {
+        viewModel.getUsers().observe(this, new Observer<List<Conversation>>() {
             @Override
-            public void onChanged(List<User> newUsers) {
-                users.clear();
-                users.addAll(newUsers);
+            public void onChanged(List<Conversation> newConversations) {
+                conversations.clear();
+                conversations.addAll(newConversations);
                 adapter.notifyDataSetChanged();
             }
         });
 
         listView = findViewById(R.id.list_view);
-        adapter = new CustomListAdapter(getApplicationContext(), users);
+        adapter = new ConversationsAdapter(getApplicationContext(), conversations);
 
         listView.setAdapter(adapter);
         listView.setClickable(true);
 
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
-            Intent intent = new Intent(getApplicationContext(), UserActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
 
-            intent.putExtra("userName", users.get(i).getUserName());
-            intent.putExtra("profilePicture", users.get(i).getProfilePicture());
-            intent.putExtra("lastMassage", users.get(i).getUserName());
-            intent.putExtra("time", users.get(i).getUserName());
+            intent.putExtra("userName", conversations.get(i).getUserName());
+            intent.putExtra("profilePicture", conversations.get(i).getProfilePicture());
+            intent.putExtra("lastMassage", conversations.get(i).getUserName());
+            intent.putExtra("time", conversations.get(i).getUserName());
 
             startActivity(intent);
         });

@@ -32,11 +32,11 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".Activities.Messages.ListActivity"
+            android:name=".Activities.Conversations.ConversationsActivity"
             android:exported="true"
             android:theme="@style/Theme.App" />
         <activity
-            android:name=".Activities.Messages.UserActivity"
+            android:name=".Activities.Messages.ChatActivity"
             android:exported="true"
             android:theme="@style/Theme.App" />
         <activity

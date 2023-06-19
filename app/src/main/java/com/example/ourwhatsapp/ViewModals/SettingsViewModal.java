@@ -12,35 +12,35 @@ public class SettingsViewModal extends ViewModel {
 
     public MutableLiveData<String> getProfilePicture() {
         if (profilePicture == null) {
-            profilePicture = new MutableLiveData<String>();
+            profilePicture = new MutableLiveData<>();
         }
         return profilePicture;
     }
 
     public MutableLiveData<String> getDisplayName() {
         if (displayName == null) {
-            displayName = new MutableLiveData<String>();
+            displayName = new MutableLiveData<>();
         }
         return displayName;
     }
 
     public MutableLiveData<String> getServerURL() {
         if (serverURL == null) {
-            serverURL = new MutableLiveData<String>();
+            serverURL = new MutableLiveData<>();
         }
         return serverURL;
     }
 
     public MutableLiveData<Integer> getTheme() {
         if (theme == null) {
-            theme = new MutableLiveData<Integer>();
+            theme = new MutableLiveData<>();
         }
         return theme;
     }
 
     public MutableLiveData<Integer> getLanguage() {
         if (language == null) {
-            language = new MutableLiveData<Integer>();
+            language = new MutableLiveData<>();
         }
         return language;
     }

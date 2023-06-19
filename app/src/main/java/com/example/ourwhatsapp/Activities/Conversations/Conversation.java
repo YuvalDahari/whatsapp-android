@@ -1,12 +1,12 @@
-package com.example.ourwhatsapp;
+package com.example.ourwhatsapp.Activities.Conversations;
 
-public class User {
+public class Conversation {
     private final String userName;
     private final String profilePicture;
     private final String lastMassage;
     private final String lastMassageSendingTime;
 
-    public User(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime) {
+    public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime) {
         this.userName = userName;
         this.profilePicture = profilePicture;
         this.lastMassage = lastMassage;

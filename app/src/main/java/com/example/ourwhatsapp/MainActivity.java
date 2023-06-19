@@ -5,12 +5,10 @@ import android.os.Bundle;
 import android.widget.Button;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ourwhatsapp.Activities.Messages.ListActivity;
+import com.example.ourwhatsapp.Activities.Conversations.ConversationsActivity;
 import com.example.ourwhatsapp.Activities.Register.RegisterActivity;
 import com.example.ourwhatsapp.Activities.Settings.MiniSettingsActivity;
-import com.example.ourwhatsapp.ViewModals.SettingsViewModal;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -30,7 +28,7 @@ public class MainActivity extends AppCompatActivity {
         showListButton = findViewById(R.id.show_list_button);
 
         showListButton.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), ListActivity.class);
+            Intent intent = new Intent(getApplicationContext(), ConversationsActivity.class);
             startActivity(intent);
         });
 
