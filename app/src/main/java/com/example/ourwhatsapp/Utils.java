@@ -23,8 +23,18 @@ public class Utils {
     }
 
     public static String imageToBase64(Context context, int resourceId) {
+        // Check if context is null
+        if(context == null){
+            return null;
+        }
+
         // Load the image from the drawable resources
         Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId);
+
+        // Check if bitmap is null
+        if(bitmap == null){
+            return null;
+        }
 
         // Convert the Bitmap to a ByteArrayOutputStream
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
@@ -36,5 +46,6 @@ public class Utils {
         // Convert the byte array to a base64 string
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
+
 
 }
