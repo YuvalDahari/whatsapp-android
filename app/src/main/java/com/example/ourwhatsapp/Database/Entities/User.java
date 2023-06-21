@@ -7,19 +7,27 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
-
     private String chatID;
     private String displayName;
-
     private String username;
-
     private String profilePhoto;
 
-    public User(String chatID, String displayName, String username, String profilePhoto) {
+    private String lastMessage;
+
+    public User(String chatID, String displayName, String username, String profilePhoto, String lastMessage) {
         this.chatID = chatID;
         this.displayName = displayName;
         this.username = username;
         this.profilePhoto = profilePhoto;
+        this.lastMessage = lastMessage;
+    }
+
+    public String getLastMessage() {
+        return lastMessage;
+    }
+
+    public void setLastMessage(String lastMessage) {
+        this.lastMessage = lastMessage;
     }
 
     public int getId() {
