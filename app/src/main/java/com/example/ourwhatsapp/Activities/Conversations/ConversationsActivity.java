@@ -21,19 +21,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class ConversationsActivity extends AppCompatActivity {
+
     private ConversationsViewModel viewModel;
 
-    final private Conversation conversation1 = new Conversation("Yuval Dahari", imageToBase64(this, R.drawable.yuval),
-            "Great JOB!", "12:00");
-
-    final private Conversation conversation2 = new Conversation("Eliyahu Houri", imageToBase64(this, R.drawable.eliyahu),
-            "I have to study", "00:30");
-
-    final private Conversation conversation3 = new Conversation("Yehonatan Calinsky", imageToBase64(this, R.drawable.yonatan),
-            "Why the hell did you start?", "03:23");
-
-    final private Conversation conversation4 = new Conversation("Gal Kaminka", imageToBase64(this, R.drawable.gal),
-            "MICROSOFT!", "08:59");
+    private Conversation conversation1;
+    private Conversation conversation2;
+    private Conversation conversation3;
+    private Conversation conversation4;
 
     ListView listView;
     ConversationsAdapter adapter;
@@ -51,10 +45,6 @@ public class ConversationsActivity extends AppCompatActivity {
         viewModel = new ViewModelProvider(this).get(ConversationsViewModel.class);
 
         conversations = new ArrayList<>();
-        conversations.add(conversation1);
-        conversations.add(conversation2);
-        conversations.add(conversation3);
-        conversations.add(conversation4);
 
         viewModel.getUsers().observe(this, new Observer<List<Conversation>>() {
             @Override
@@ -74,10 +64,12 @@ public class ConversationsActivity extends AppCompatActivity {
         listView.setOnItemClickListener((adapterView, view, i, l) -> {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
 
-            intent.putExtra("userName", conversations.get(i).getUserName());
-            intent.putExtra("profilePicture", conversations.get(i).getProfilePicture());
-            intent.putExtra("lastMassage", conversations.get(i).getUserName());
-            intent.putExtra("time", conversations.get(i).getUserName());
+            Conversation currentConversation = conversations.get(i);
+
+            intent.putExtra("userName", currentConversation.getUserName());
+            intent.putExtra("profilePicture", currentConversation.getProfilePicture());
+            intent.putExtra("lastMassage", currentConversation.getLastMassage());
+            intent.putExtra("time", currentConversation.getLastMassageSendingTime());
 
             startActivity(intent);
         });
