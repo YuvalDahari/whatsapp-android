@@ -19,7 +19,7 @@ public class ChatAPI {
         this.userDao = userDao;
 
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.0.2:12345/api/")
+                .baseUrl("http://10.0.2.2:12345/api/")
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

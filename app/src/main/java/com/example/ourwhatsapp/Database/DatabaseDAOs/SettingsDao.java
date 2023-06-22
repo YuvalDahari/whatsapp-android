@@ -2,6 +2,8 @@ package com.example.ourwhatsapp.Database.DatabaseDAOs;
 
 import androidx.room.Dao;
 import androidx.room.Delete;
+import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -15,6 +17,9 @@ public interface SettingsDao {
 
     @Update
     void update(Settings... settings);
+
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(Settings... settings);
 
     @Delete
     void delete(Settings... settings);

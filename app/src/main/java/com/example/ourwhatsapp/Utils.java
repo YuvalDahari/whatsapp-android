@@ -47,5 +47,10 @@ public class Utils {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-
+    public static String imagePathToBase64(Bitmap bitmap){
+        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        byte[] bytes = byteArrayOutputStream.toByteArray();
+        return Base64.encodeToString(bytes, Base64.DEFAULT);
+    }
 }

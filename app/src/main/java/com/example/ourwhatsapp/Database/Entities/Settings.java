@@ -1,10 +1,11 @@
 package com.example.ourwhatsapp.Database.Entities;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
 
-@Entity
+@Entity(indices = {@Index(value = {"key"}, unique = true)})
 public class Settings {
     @PrimaryKey(autoGenerate = true)
     private int id;

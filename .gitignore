@@ -17,3 +17,5 @@ app/build
 local.properties
 /app/src/androidTest/java/com/example/ourwhatsapp/ExampleInstrumentedTest.java
 /app/src/test/java/com/example/ourwhatsapp/ExampleUnitTest.java
+server/node_modules
+node_modules
