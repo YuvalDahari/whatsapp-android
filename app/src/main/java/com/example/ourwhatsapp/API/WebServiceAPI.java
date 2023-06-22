@@ -11,6 +11,7 @@ import com.example.ourwhatsapp.API.Entities.User;
 
 import java.util.List;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.DELETE;
@@ -38,8 +39,8 @@ public interface WebServiceAPI {
     @POST("Chats/{id}/Messages")
     Call<Message> sendMessage(@Header("Authorization") String token, @Path("id") String id, @Body SendMessageReq req);
 
-    @GET("Tokens")
-    Call<String> getToken(@Body GetTokenReq req);
+    @POST("Tokens")
+    Call<ResponseBody> getToken(@Body GetTokenReq req);
 
     @GET("Users/{username}")
     Call<User> getUser(@Header("Authorization") String token, @Path("username") String username);
