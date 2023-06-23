@@ -47,4 +47,21 @@ public class ConversationRepository {
             chatAPI.getConversations(AppDatabase.getToken(), users);
         }).start();
     }
+
+    public void deleteChat(String chatID, MutableLiveData<List<Conversation>> users) {
+        new Thread(() -> {
+            // delete from room
+            userDao.deleteByChatID(chatID);
+            messagesDao.delete(chatID);
+            // send delete to server
+            chatAPI.deleteChat(AppDatabase.getToken(), chatID, users);
+        }).start();
+    }
+
+    public void createChat(String username, MutableLiveData<List<Conversation>> users) {
+        new Thread(() -> {
+            // send delete to server
+            chatAPI.createChat(AppDatabase.getToken(), username, users);
+        }).start();
+    }
 }

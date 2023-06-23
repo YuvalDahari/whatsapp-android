@@ -1,11 +1,13 @@
 package com.example.ourwhatsapp.Activities.Conversations;
 
-import static com.example.ourwhatsapp.Utils.imageToBase64;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.ListView;
+import android.text.InputType;
+import android.widget.EditText;
+import android.widget.Toast;
+
+import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -13,12 +15,12 @@ import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ourwhatsapp.Activities.Messages.AddNewChatActivity;
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
-import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
+import com.example.ourwhatsapp.Database.AppDatabase;
+import com.example.ourwhatsapp.Repositories.ChatRepository;
 import com.example.ourwhatsapp.Repositories.ConversationRepository;
 import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
-import com.example.ourwhatsapp.databinding.ActivityMainBinding;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -71,9 +73,59 @@ public class ConversationsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
+        binding.listView.setOnItemLongClickListener((adapterView, view, i, l) -> {
+            new AlertDialog.Builder(ConversationsActivity.this)
+                    .setTitle("Delete chat")
+                    .setMessage("Are you sure you want to delete this chat?")
+
+                    .setPositiveButton(android.R.string.yes, (dialog, which) ->
+                            conversationRepository.deleteChat(conversations.get(i).getChatID(), viewModel.getUsers()))
+                    .setNegativeButton(android.R.string.no, null)
+                    .setIcon(android.R.drawable.ic_dialog_alert)
+                    .show();
+            return true;
+        });
+
         binding.addBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), AddNewChatActivity.class);
-            startActivity(intent);
+            AlertDialog.Builder builder = new AlertDialog.Builder(this);
+            builder.setTitle("Create new chat - enter username");
+
+            // Set up the input
+            final EditText input = new EditText(this);
+            // Specify the type of input expected; this, for example, sets the input as a password, and will mask the text
+            input.setInputType(InputType.TYPE_CLASS_TEXT);
+            builder.setView(input);
+
+            // Set up the buttons
+            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    String newUsername = input.getText().toString();
+                    if (newUsername.equals(AppDatabase.getUsername())) {
+                        Toast.makeText(getApplicationContext(), "You can not create chat with yourself!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    if (newUsername.isEmpty()) {
+                        Toast.makeText(getApplicationContext(), "Username can not be empty!", Toast.LENGTH_SHORT).show();
+                        return;
+                    }
+                    for (Conversation user : conversations) {
+                        if (user.getUserName().equals(newUsername)) {
+                            Toast.makeText(getApplicationContext(), "Chat already exists!", Toast.LENGTH_SHORT).show();
+                            return;
+                        }
+                    }
+                    conversationRepository.createChat(newUsername, viewModel.getUsers());
+                }
+            });
+            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
+                @Override
+                public void onClick(DialogInterface dialog, int which) {
+                    dialog.cancel();
+                }
+            });
+
+            builder.show();
         });
 
         binding.settingsBtn.setOnClickListener(view -> {

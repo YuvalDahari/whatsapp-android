@@ -2,6 +2,7 @@ package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
@@ -31,9 +32,25 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        Intent activityIntent = getIntent();
+
+        if (activityIntent == null || !activityIntent.hasExtra("userName") || !activityIntent.hasExtra("profilePicture") || !activityIntent.hasExtra("id")) {
+            finish();
+        }
+
+        String userName = activityIntent.getStringExtra("userName");
+        String profilePicture = activityIntent.getStringExtra("profilePicture");
+        String chatID = getIntent().getStringExtra("id");
+
+        viewModel.getDisplayName().setValue(userName);
+        viewModel.getProfilePicture().setValue(profilePicture);
+
         messages = new ArrayList<>();
 
-        chatRepository = new ChatRepository(getApplicationContext(), getIntent().getStringExtra("id"));
+        messageAdapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
+        binding.listView.setAdapter(messageAdapter);
+
+        chatRepository = new ChatRepository(getApplicationContext(), chatID);
 
         viewModel.getProfilePicture().observe(this, new Observer<String>() {
             @Override
@@ -62,21 +79,13 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-
-        Intent activityIntent = getIntent();
-
-        if (activityIntent != null) {
-            String userName = activityIntent.getStringExtra("userName");
-            String profilePicture = activityIntent.getStringExtra("profilePicture");
-
-            viewModel.getDisplayName().setValue(userName);
-            viewModel.getProfilePicture().setValue(profilePicture);
-
-            messageAdapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
-            binding.listView.setAdapter(messageAdapter);
-        }
-
         binding.returnBtn.setOnClickListener(view -> finish());
+
+        binding.sendBtn.setOnClickListener(view -> {
+            chatRepository.sendMessage(binding.messageEditText.getText().toString(),
+                    chatID, viewModel.getChat());
+            binding.messageEditText.setText(null);
+        });
     }
 
     @Override
