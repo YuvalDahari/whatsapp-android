@@ -3,13 +3,12 @@ package com.example.ourwhatsapp.Activities.Register;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Button;
-import android.widget.ImageView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.widget.Toast;
 
 import androidx.activity.result.ActivityResult;
@@ -21,13 +20,13 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.Observer;
 
 import com.example.ourwhatsapp.MainActivity;
-import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Repositories.UserRepository;
 import com.example.ourwhatsapp.Utils;
-import com.example.ourwhatsapp.databinding.ActivityMainBinding;
 import com.example.ourwhatsapp.databinding.ActivityRegisterBinding;
 
 import java.io.InputStream;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -47,7 +46,8 @@ public class RegisterActivity extends AppCompatActivity {
         base64 = Utils.imagePathToBase64(bm);
 
         ActivityResultLauncher<Intent> imagePickerActivityResult = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(), new ActivityResultCallback<ActivityResult>() {
+                new ActivityResultContracts.StartActivityForResult(),
+                new ActivityResultCallback<ActivityResult>() {
                     @Override
                     public void onActivityResult(ActivityResult result) {
                         if (result.getResultCode() == RESULT_OK) {
@@ -82,21 +82,110 @@ public class RegisterActivity extends AppCompatActivity {
             imagePickerActivityResult.launch(galleryIntent);
         });
 
-        binding.showListButton.setOnClickListener(view -> {
-            MutableLiveData<Integer> res = userRepository.tryRegister(binding.loginUsername.getText().toString(),
-                    binding.loginPassword.getText().toString(), binding.displayName.getText().toString(), base64);
-            res.observe(this, new Observer<Integer>() {
-                @Override
-                public void onChanged(Integer code) {
-                    if (code == 200) {
-                        finish();
-                    } else if (code == 409) {
-                        Toast.makeText(getApplicationContext(), "Username is already exists, try another one!", Toast.LENGTH_LONG).show();
-                    } else {
-                        Toast.makeText(getApplicationContext(), "Something went wrong, try again!", Toast.LENGTH_LONG).show();
-                    }
+        binding.loginUsername.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isValidUsername(s.toString())) {
+                    binding.loginUsername.setTextColor(Color.RED);
+                } else {
+                    binding.loginUsername.setTextColor(Color.BLACK);
                 }
-            });
+            }
+        });
+
+        binding.loginPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isValidPassword(s.toString())) {
+                    binding.loginPassword.setTextColor(Color.RED);
+                } else {
+                    binding.loginPassword.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
+        binding.displayName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (!Utils.isValidDisplayName(s.toString())) {
+                    binding.displayName.setTextColor(Color.RED);
+                } else {
+                    binding.displayName.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
+        binding.confirmPassword.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                String password = binding.loginPassword.getText().toString();
+                if (!(s.toString().equals(password))) {
+                    binding.confirmPassword.setTextColor(Color.RED);
+                } else {
+                    binding.confirmPassword.setTextColor(Color.BLACK);
+                }
+            }
+        });
+
+
+        binding.showListButton.setOnClickListener(view -> {
+            String username = binding.loginUsername.getText().toString();
+            String password = binding.loginPassword.getText().toString();
+            String displayName = binding.displayName.getText().toString();
+            String confirmPassword = binding.confirmPassword.getText().toString();
+
+
+            // Validate the input fields
+            if (!Utils.isValidUsername(username)) {
+                Toast.makeText(getApplicationContext(), "Invalid username", Toast.LENGTH_LONG / 2).show();
+                Toast.makeText(getApplicationContext(), "Username must be at least 6 chars, only letters and digits", Toast.LENGTH_LONG).show();
+            } else if (!Utils.isValidPassword(password)) {
+                Toast.makeText(getApplicationContext(), "Invalid password", Toast.LENGTH_LONG / 2).show();
+                Toast.makeText(getApplicationContext(), "at least 8 chars, 1+ uppercase & lowercase letter, digits and special char", Toast.LENGTH_LONG).show();
+            } else if (!Utils.isValidDisplayName(displayName)) {
+                Toast.makeText(getApplicationContext(), "Invalid display name", Toast.LENGTH_LONG).show();
+                Toast.makeText(getApplicationContext(), "must be at least 6 chars, only letters, digits and spaces", Toast.LENGTH_LONG).show();
+            } else if (!(password.equals(confirmPassword))) {
+                Toast.makeText(getApplicationContext(), "Your passwords do not match", Toast.LENGTH_LONG).show();
+            } else {
+                MutableLiveData<Integer> res = userRepository.tryRegister(username, password, displayName, base64);
+                res.observe(this, new Observer<Integer>() {
+                    @Override
+                    public void onChanged(Integer code) {
+                        if (code == 200) {
+                            finish();
+                        } else if (code == 409) {
+                            Toast.makeText(getApplicationContext(), "Username is already exists, try another one!", Toast.LENGTH_LONG).show();
+                        } else {
+                            Toast.makeText(getApplicationContext(), "Something went wrong, try again!", Toast.LENGTH_LONG).show();
+                        }
+                    }
+                });
+            }
         });
     }
 
