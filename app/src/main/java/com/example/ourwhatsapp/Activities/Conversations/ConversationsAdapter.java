@@ -31,7 +31,11 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
             convertView = inflater.inflate(R.layout.custom_conversation_item, parent, false);
         }
 
-        Utils.displayBase64Image(conversation.getProfilePicture(), convertView.findViewById(R.id.profile_image));
+        try {
+            Utils.displayBase64Image(conversation.getProfilePicture(), convertView.findViewById(R.id.profile_image));
+        } catch (Exception ex) {
+
+        }
         ((TextView)convertView.findViewById(R.id.user_name)).setText(conversation.getUserName());
         ((TextView)convertView.findViewById(R.id.last_massage)).setText(conversation.getLastMassage());
         ((TextView)convertView.findViewById(R.id.time)).setText(conversation.getLastMassageSendingTime());

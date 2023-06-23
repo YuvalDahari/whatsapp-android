@@ -1,9 +1,10 @@
 package com.example.ourwhatsapp.Database.Entities;
 
 import androidx.room.Entity;
+import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
-@Entity
+@Entity(indices = {@Index(value = {"username"}, unique = true)})
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
@@ -11,15 +12,16 @@ public class User {
     private String displayName;
     private String username;
     private String profilePhoto;
-
     private String lastMessage;
 
-    public User(String chatID, String displayName, String username, String profilePhoto, String lastMessage) {
+    private String lastMassageSendingTime;
+    public User(String chatID, String displayName, String username, String profilePhoto, String lastMessage, String lastMassageSendingTime) {
         this.chatID = chatID;
         this.displayName = displayName;
         this.username = username;
         this.profilePhoto = profilePhoto;
         this.lastMessage = lastMessage;
+        this.lastMassageSendingTime = lastMassageSendingTime;
     }
 
     public String getLastMessage() {
@@ -28,6 +30,14 @@ public class User {
 
     public void setLastMessage(String lastMessage) {
         this.lastMessage = lastMessage;
+    }
+
+    public String getLastMassageSendingTime() {
+        return lastMassageSendingTime;
+    }
+
+    public void setLastMassageSendingTime(String lastMassageSendingTime) {
+        this.lastMassageSendingTime = lastMassageSendingTime;
     }
 
     public int getId() {

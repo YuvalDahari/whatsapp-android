@@ -3,6 +3,7 @@ package com.example.ourwhatsapp.Database.DatabaseDAOs;
 import androidx.room.Dao;
 import androidx.room.Delete;
 import androidx.room.Insert;
+import androidx.room.OnConflictStrategy;
 import androidx.room.Query;
 import androidx.room.Update;
 
@@ -19,14 +20,14 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE id = :id")
     User get(int id);
 
-    @Query("SELECT * FROM user WHERE id != :id")
-    List<User> getChats(int id);
+    @Query("SELECT * FROM user WHERE chatID != 0")
+    List<User> getChats();
 
     @Query("SELECT * FROM user WHERE chatID = 0")
     User getMe();
 
-    @Insert
-    void insert(User... users);
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    void insert(List<User> users);
 
     @Update
     void update(User... users);

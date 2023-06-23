@@ -74,4 +74,8 @@ public class UserAPI {
             }
         });
     }
+
+    public void getCurrentUser(String username, String token, MutableLiveData<Integer> res) {
+
+    }
 }
