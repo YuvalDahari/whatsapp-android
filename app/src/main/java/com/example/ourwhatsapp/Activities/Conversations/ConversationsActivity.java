@@ -13,11 +13,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
-import com.example.ourwhatsapp.Activities.Messages.AddNewChatActivity;
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
 import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
 import com.example.ourwhatsapp.Database.AppDatabase;
-import com.example.ourwhatsapp.Repositories.ChatRepository;
 import com.example.ourwhatsapp.Repositories.ConversationRepository;
 import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
