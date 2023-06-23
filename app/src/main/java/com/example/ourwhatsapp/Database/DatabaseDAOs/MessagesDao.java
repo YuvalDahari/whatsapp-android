@@ -24,7 +24,7 @@ public interface MessagesDao {
     List<Messages> getChatsMessages(String chatID);
 
     @Insert
-    void insert(Messages... messages);
+    void insert(List<Messages> messages);
 
     @Update
     void update(Messages... messages);

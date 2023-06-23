@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.ourwhatsapp.R;
+import com.example.ourwhatsapp.Repositories.ChatRepository;
 import com.example.ourwhatsapp.Utils;
 import com.example.ourwhatsapp.ViewModels.ChatViewModel;
 import com.example.ourwhatsapp.databinding.ActivityChatBinding;
@@ -20,6 +21,7 @@ public class ChatActivity extends AppCompatActivity {
     private ActivityChatBinding binding;
     private MessageAdapter messageAdapter;
     private List<Message> messages;
+    private ChatRepository chatRepository;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,10 +31,18 @@ public class ChatActivity extends AppCompatActivity {
         binding = ActivityChatBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
+        messages = new ArrayList<>();
+
+        chatRepository = new ChatRepository(getApplicationContext(), getIntent().getStringExtra("id"));
+
         viewModel.getProfilePicture().observe(this, new Observer<String>() {
             @Override
             public void onChanged(String profilePicture) {
-                Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
+                try {
+                    Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
+                } catch (Exception ex) {
+
+                }
             }
         });
 
@@ -60,19 +70,19 @@ public class ChatActivity extends AppCompatActivity {
             String profilePicture = activityIntent.getStringExtra("profilePicture");
 
             viewModel.getDisplayName().setValue(userName);
+            viewModel.getProfilePicture().setValue(profilePicture);
 
-            Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
-            binding.userTextUserName.setText(userName);
-
-            messages = new ArrayList<>();
-            messages.add(new Message("Hello", "10:00", Message.MessageType.SENT));
-            messages.add(new Message("Hi", "10:05", Message.MessageType.RECEIVED));
-
-            ListView listView = findViewById(R.id.list_view);
             messageAdapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
-            listView.setAdapter(messageAdapter);
+            binding.listView.setAdapter(messageAdapter);
         }
 
         binding.returnBtn.setOnClickListener(view -> finish());
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+
+        chatRepository.loadMessages(viewModel.getChat());
     }
 }

@@ -5,12 +5,18 @@ public class Conversation {
     private final String profilePicture;
     private final String lastMassage;
     private final String lastMassageSendingTime;
+    private final String chatID;
 
-    public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime) {
+    public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime, String chatID) {
         this.userName = userName;
         this.profilePicture = profilePicture;
         this.lastMassage = lastMassage;
         this.lastMassageSendingTime = lastMassageSendingTime;
+        this.chatID = chatID;
+    }
+
+    public String getChatID() {
+        return chatID;
     }
 
     public String getProfilePicture() {

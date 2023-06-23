@@ -28,7 +28,18 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         userRepository = new UserRepository(getApplicationContext());
+
+        MutableLiveData<String> token = userRepository.checkToken();
         MutableLiveData<Integer> saveTokenRes = new MutableLiveData<>();
+        token.observe(this, new Observer<String>() {
+            @Override
+            public void onChanged(String s) {
+                if (s != null) {
+                    Intent intent = new Intent(getApplicationContext(), ConversationsActivity.class);
+                    startActivity(intent);
+                }
+            }
+        });
 
         saveTokenRes.observe(this, new Observer<Integer>() {
             @Override
@@ -51,7 +62,7 @@ public class MainActivity extends AppCompatActivity {
                     String token = s;
                     if (token != null) {
                         // Save token and get user data
-                        userRepository.saveToken(token, saveTokenRes, getApplicationContext());
+                        userRepository.login(token, binding.loginUsername.getText().toString(), saveTokenRes);
                     } else {
                         Toast.makeText(getApplicationContext(), "Wrong username or password!", Toast.LENGTH_LONG).show();
                     }

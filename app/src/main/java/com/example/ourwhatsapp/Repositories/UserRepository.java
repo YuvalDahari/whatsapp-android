@@ -41,10 +41,27 @@ public class UserRepository {
         return data;
     }
 
-    public void saveToken(String token, MutableLiveData<Integer> data, Context context) {
+    public void login(String token, String username, MutableLiveData<Integer> data) {
         new Thread(() -> {
+            AppDatabase.setToken(token);
+            AppDatabase.setUsername(username);
             settingsDao.insert(new Settings("token", token));
+            settingsDao.insert(new Settings("username", username));
             data.postValue(1);
         }).start();
+    }
+
+    public MutableLiveData<String> checkToken() {
+        MutableLiveData<String> data = new MutableLiveData<>();
+        new Thread(() -> {
+            Settings token = settingsDao.get("token");
+            Settings username = settingsDao.get("username");
+            if (token != null && username != null) {
+                AppDatabase.setToken(token.getValue());
+                AppDatabase.setUsername(username.getValue());
+                data.postValue(token.getValue());
+            }
+        }).start();
+        return data;
     }
 }
