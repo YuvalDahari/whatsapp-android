@@ -1,6 +1,7 @@
 package com.example.ourwhatsapp.Activities.Settings;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -10,9 +11,9 @@ import android.widget.AdapterView;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.ourwhatsapp.Database.AppDatabase;
-import com.example.ourwhatsapp.Database.Entities.Settings;
 import com.example.ourwhatsapp.MainActivity;
 import com.example.ourwhatsapp.Utils;
 import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
@@ -20,12 +21,15 @@ import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
 public class SettingsActivity extends AppCompatActivity {
 
     private ActivitySettingsBinding binding;
-    AppDatabase db = AppDatabase.getInstance(this);
+    private AppDatabase db = AppDatabase.getInstance(this);
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        sharedPreferences = getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
 
         boolean showLogout = getIntent().getBooleanExtra("SHOW_LOGOUT", false);
         binding.logoutButton.setVisibility(showLogout ? View.VISIBLE : View.GONE);
@@ -49,17 +53,12 @@ public class SettingsActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         // Load saved theme
-        new Thread(() -> {
-            Settings themeSetting = db.settingsDao().get("theme");
-            String savedTheme = (themeSetting != null) ? themeSetting.getValue() : "Classic";
-            runOnUiThread(() -> {
-                if ("Dark".equals(savedTheme)) {
-                    binding.themeSpinner.setSelection(1);
-                } else {
-                    binding.themeSpinner.setSelection(0);
-                }
-            });
-        }).start();
+        String savedTheme = sharedPreferences.getString("theme", "Classic");
+        if ("Dark".equals(savedTheme)) {
+            binding.themeSpinner.setSelection(1);
+        } else {
+            binding.themeSpinner.setSelection(0);
+        }
 
         binding.logoutButton.setOnClickListener(view -> {
             new Thread(db::clearAllTables).start();
@@ -73,12 +72,17 @@ public class SettingsActivity extends AppCompatActivity {
         binding.themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+
                 String selectedTheme = parent.getItemAtPosition(position).toString();
-                // Save selected theme
-                new Thread(() -> {
-                    Settings themeSetting = new Settings("theme", selectedTheme);
-                    db.settingsDao().insert(themeSetting);
-                }).start();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("theme", selectedTheme);
+                editor.apply();
+
+                if ("Dark".equals(selectedTheme)) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
 
             @Override
@@ -87,13 +91,15 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.exitBtn.setOnClickListener(view -> {
             String url = binding.serverPort.getText().toString();
-
-            if (Utils.isValidURL(url) && !url.isEmpty()) {
+            if (url.isEmpty()) {
+                finish();
+            } else if (Utils.isValidURL(url)) {
                 Toast.makeText(getApplicationContext(), "Invalid url", Toast.LENGTH_LONG / 2).show();
             } else {
                 new Thread(() -> {
-                    Settings urlSetting = new Settings("url", binding.serverPort.getText().toString());
-                    db.settingsDao().insert(urlSetting);
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("url", binding.serverPort.getText().toString());
+                    editor.apply();
                 }).start();
                 finish();
             }

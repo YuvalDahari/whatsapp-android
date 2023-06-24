@@ -1,6 +1,7 @@
 package com.example.ourwhatsapp;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Color;
 import android.os.Bundle;
 import android.text.Editable;
@@ -8,6 +9,7 @@ import android.text.TextWatcher;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.Activities.Conversations.ConversationsActivity;
@@ -21,14 +23,27 @@ import com.example.ourwhatsapp.databinding.ActivityMainBinding;
 
 
 public class MainActivity extends AppCompatActivity {
+
     private ActivityMainBinding binding;
     private UserRepository userRepository;
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         binding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
+
+        String savedTheme;
+        sharedPreferences = getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
+        savedTheme = sharedPreferences.getString("theme", "Classic");
+
+        if ("Dark".equals(savedTheme)) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+        }
 
         userRepository = new UserRepository(getApplicationContext());
 

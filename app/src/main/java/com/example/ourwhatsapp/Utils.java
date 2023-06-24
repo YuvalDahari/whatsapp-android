@@ -1,8 +1,12 @@
 package com.example.ourwhatsapp;
 
+import static android.content.Context.MODE_PRIVATE;
+
+import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.util.Base64;
+import android.util.Log;
 import android.widget.ImageView;
 import android.content.Context;
 
@@ -12,7 +16,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-
     public static void displayBase64Image(String base64String, ImageView imageView) {
         // Decode the Base64 string to a byte array
         byte[] imageBytes = Base64.decode(base64String, Base64.DEFAULT);
@@ -83,6 +86,17 @@ public class Utils {
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(url);
         return !matcher.matches();
+    }
+
+    public static String getURL(Context context) {
+        SharedPreferences sharedPreferences = context.getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
+
+        String savedURL = sharedPreferences.getString("url", "http://10.0.2.2:12345");
+        if (savedURL.endsWith("/")) {
+            savedURL = savedURL.substring(0, savedURL.length() - 1);
+        }
+        savedURL += "/api/";
+        return savedURL;
     }
 
 }

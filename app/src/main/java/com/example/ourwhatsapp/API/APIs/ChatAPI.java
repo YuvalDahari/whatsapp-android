@@ -1,6 +1,9 @@
 package com.example.ourwhatsapp.API.APIs;
 
+import static android.content.Context.MODE_PRIVATE;
+
 import android.content.Context;
+import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;
@@ -16,6 +19,7 @@ import com.example.ourwhatsapp.Database.DatabaseDAOs.MessagesDao;
 import com.example.ourwhatsapp.Database.DatabaseDAOs.UserDao;
 import com.example.ourwhatsapp.Database.Entities.Messages;
 import com.example.ourwhatsapp.Database.Entities.User;
+import com.example.ourwhatsapp.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,7 +35,8 @@ public class ChatAPI {
     private WebServiceAPI webServiceAPI;
     private MessagesDao messagesDao;
     private UserDao userDao;
-    Context context;
+    private Context context;
+
 
     public ChatAPI(MessagesDao messagesDao, UserDao userDao, Context context) {
         this.messagesDao = messagesDao;
@@ -39,7 +44,7 @@ public class ChatAPI {
         this.context = context;
 
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:12345/api/")
+                .baseUrl(Utils.getURL(context))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
