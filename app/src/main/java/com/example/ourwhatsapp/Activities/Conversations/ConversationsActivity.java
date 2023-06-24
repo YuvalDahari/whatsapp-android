@@ -18,6 +18,7 @@ import com.example.ourwhatsapp.Database.AppDatabase;
 import com.example.ourwhatsapp.Repositories.ConversationRepository;
 import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
+import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
 
@@ -44,6 +45,9 @@ public class ConversationsActivity extends AppCompatActivity {
         viewModel.getUsers().observe(this, newConversations -> {
             conversations.clear();
             conversations.addAll(newConversations);
+            for (Conversation conversation : newConversations) {
+                FirebaseMessaging.getInstance().subscribeToTopic(conversation.getChatID() + "_" + AppDatabase.getUsername());
+            }
             adapter.notifyDataSetChanged();
         });
 

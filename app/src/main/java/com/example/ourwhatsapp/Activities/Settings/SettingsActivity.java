@@ -14,9 +14,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 
 import com.example.ourwhatsapp.Database.AppDatabase;
+import com.example.ourwhatsapp.Database.Entities.User;
 import com.example.ourwhatsapp.MainActivity;
 import com.example.ourwhatsapp.Utils;
 import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
+import com.google.firebase.messaging.FirebaseMessaging;
+
+import java.util.List;
 
 public class SettingsActivity extends AppCompatActivity {
 
@@ -36,10 +40,12 @@ public class SettingsActivity extends AppCompatActivity {
 
         binding.serverPort.addTextChangedListener(new TextWatcher() {
             @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {
+            }
 
             @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+            public void onTextChanged(CharSequence s, int start, int before, int count) {
+            }
 
             @Override
             public void afterTextChanged(Editable s) {
@@ -60,8 +66,18 @@ public class SettingsActivity extends AppCompatActivity {
             binding.themeSpinner.setSelection(0);
         }
 
+        String savedURL = sharedPreferences.getString("url", "http://10.0.2.2:12345");
+        binding.serverPort.setText(savedURL);
+
+
         binding.logoutButton.setOnClickListener(view -> {
-            new Thread(db::clearAllTables).start();
+            new Thread(() -> {
+                List<User> chats = db.userDao().getChats();
+                for (User chat : chats) {
+                    FirebaseMessaging.getInstance().unsubscribeFromTopic(chat.getChatID() + "_" + AppDatabase.getUsername());
+                }
+                db.clearAllTables();
+            }).start();
             // Start MainActivity after logging out
             Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
@@ -86,7 +102,8 @@ public class SettingsActivity extends AppCompatActivity {
             }
 
             @Override
-            public void onNothingSelected(AdapterView<?> parent) { }
+            public void onNothingSelected(AdapterView<?> parent) {
+            }
         });
 
         binding.exitBtn.setOnClickListener(view -> {

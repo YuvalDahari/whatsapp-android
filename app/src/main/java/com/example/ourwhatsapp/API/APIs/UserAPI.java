@@ -49,12 +49,14 @@ public class UserAPI {
                         res.postValue(null);
                     }
                 } else {
+                    Toast.makeText(context, "code:" + response.code(), Toast.LENGTH_SHORT).show();
                     res.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 res.postValue(null);
             }
         });

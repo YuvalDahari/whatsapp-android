@@ -43,7 +43,7 @@ const getChats = async (username) => {
             return false;
         }
         const chats = await Chat.find({ users: user._id });
-        
+
         // Map each chat to a Promise that will fetch its details
         const chatPromises = chats.map(async (chat) => {
             let returnChat = {
@@ -63,10 +63,10 @@ const getChats = async (username) => {
             }
             return returnChat;
         });
-        
+
         // Execute all the promises in parallel and wait for them to finish
         const returnChats = await Promise.all(chatPromises);
-        
+
         return returnChats;
     } catch {
         return false;
@@ -144,7 +144,7 @@ const sendMessage = async (sender, chatID, messageContent) => {
         if (!user) {
             return false;
         }
-        
+
         // if so, send message on this chat via this sender
         const message = new Message({
             sender: user._id,
@@ -159,6 +159,33 @@ const sendMessage = async (sender, chatID, messageContent) => {
         if (!upda) {
             return false;
         }
+
+        // send push notification
+        var FCM = require('fcm-node');
+
+        var serverKey = 'AAAAhJKNxlE:APA91bG-EiB3fKIfvk-aYV0QyzmGXUjSeGWR_hEDUT7yOoXOLWpbXQPKNjdjLGQMac1WtPg8aeaJcH7yXfh40T5DCgbkFzk43WkLm__v8eo_MOKHIrrQL-S0Iugd3zCf2ZMFB65w19Nl';
+        const secondUser = chat.users[0].equals(user._id) ? chat.users[1] : chat.users[0];
+        const secondUserData = await UserService.getUserByID(secondUser);
+        var topic1 = chatID + "_" + secondUserData.username;
+        var fcm = new FCM(serverKey);
+
+        console.log(topic1);
+
+        var pushNotificationMessage = {
+            to: "/topics/" + topic1,
+            notification: {
+                title: 'Test message',
+                body: 'chatID:' + chatID + ':newMessage'
+            },
+        };
+
+        fcm.send(pushNotificationMessage, function (err, response) {
+            if (err) {
+                console.log(err);
+            } else {
+                console.log("Successfully sent with response: ", response);
+            }
+        });
 
         return {
             id: newMessage._id,
