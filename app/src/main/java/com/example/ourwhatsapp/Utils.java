@@ -60,20 +60,29 @@ public class Utils {
         String regex = "^[a-zA-Z0-9][a-zA-Z0-9 ]{4,}[a-zA-Z0-9]$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(displayName);
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     public static boolean isValidPassword(String password) {
         String regex = "(?=.*[a-z])(?=.*[A-Z])(?=.*[^A-Za-z0-9\\s])(?=\\S+$).{8,}";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(password);
-        return matcher.matches();
+        return !matcher.matches();
     }
 
     public static boolean isValidUsername(String username) {
         String regex = "^[A-Za-z0-9]{6,}$";
         Pattern pattern = Pattern.compile(regex);
         Matcher matcher = pattern.matcher(username);
-        return matcher.matches();
+        return !matcher.matches();
     }
+
+    public static boolean isValidURL(String url) {
+        String regex = "^(http|https)://(localhost|((([a-z\\d]([a-z\\d-]*[a-z\\d])*)\\.)*[a-z]" +
+                "[a-z\\d-]*[a-z\\d]|((\\d{1,3}\\.){3}\\d{1,3})))(:\\d+)?(/[-a-z\\d%@_.~+&:]*)*$";
+        Pattern pattern = Pattern.compile(regex);
+        Matcher matcher = pattern.matcher(url);
+        return !matcher.matches();
+    }
+
 }
