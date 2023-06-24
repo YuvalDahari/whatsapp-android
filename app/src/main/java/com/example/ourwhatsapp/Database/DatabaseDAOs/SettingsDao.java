@@ -19,11 +19,9 @@ public interface SettingsDao {
     void update(Settings... settings);
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Settings... settings);
+    void insert(Settings settings);
 
     @Delete
     void delete(Settings... settings);
 
-    @Query("DELETE FROM settings")
-    void deleteAll();
 }

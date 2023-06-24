@@ -12,9 +12,13 @@ import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.Activities.Conversations.ConversationsActivity;
 import com.example.ourwhatsapp.Activities.Register.RegisterActivity;
-import com.example.ourwhatsapp.Activities.Settings.MiniSettingsActivity;
+import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
+import com.example.ourwhatsapp.Database.AppDatabase;
+import com.example.ourwhatsapp.Database.Entities.Settings;
 import com.example.ourwhatsapp.Repositories.UserRepository;
 import com.example.ourwhatsapp.databinding.ActivityMainBinding;
+
+
 
 public class MainActivity extends AppCompatActivity {
     private ActivityMainBinding binding;
@@ -46,6 +50,24 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Something went wrong, try again!", Toast.LENGTH_LONG).show();
             }
         });
+
+        // Get the AppDatabase instance
+        AppDatabase db = AppDatabase.getInstance(this);
+
+        // Retrieve the 'theme' setting from the database in a separate thread
+        new Thread(() -> {
+            Settings themeSetting = db.settingsDao().get("theme");
+            String selectedTheme = (themeSetting != null) ? themeSetting.getValue() : null;
+
+            runOnUiThread(() -> {
+                if ("Dark".equals(selectedTheme)) {
+                    setTheme(R.style.Base_Theme);
+                } else {
+                    setTheme(R.style.Theme_App);
+                }
+            });
+        }).start();
+
 
         binding.loginUsername.addTextChangedListener(new TextWatcher() {
             @Override
@@ -111,12 +133,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         binding.settingsBtn.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             startActivity(intent);
         });
 
-        binding.navToMiniSettings.setOnClickListener(view -> {
-            Intent intent = new Intent(getApplicationContext(), MiniSettingsActivity.class);
+        binding.navToSettings.setOnClickListener(view -> {
+            Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            intent.putExtra("SHOW_LOGOUT", false);
             startActivity(intent);
         });
     }
