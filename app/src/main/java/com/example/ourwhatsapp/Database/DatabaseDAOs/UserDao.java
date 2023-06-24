@@ -20,7 +20,7 @@ public interface UserDao {
     @Query("SELECT * FROM user WHERE id = :id")
     User get(int id);
 
-    @Query("SELECT * FROM user WHERE chatID != 0")
+    @Query("SELECT * FROM user WHERE chatID != 0 ORDER BY lastMassageSendingTime DESC")
     List<User> getChats();
 
     @Query("SELECT * FROM user WHERE chatID = 0")

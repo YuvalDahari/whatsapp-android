@@ -8,7 +8,6 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.Toast;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.MutableLiveData;
@@ -20,9 +19,6 @@ import com.example.ourwhatsapp.Database.AppDatabase;
 import com.example.ourwhatsapp.Database.Entities.Settings;
 import com.example.ourwhatsapp.Repositories.UserRepository;
 import com.example.ourwhatsapp.databinding.ActivityMainBinding;
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -161,6 +157,7 @@ public class MainActivity extends AppCompatActivity {
         binding.navToSettings.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             intent.putExtra("SHOW_LOGOUT", false);
+            intent.putExtra("SHOW_URL", true);
             startActivity(intent);
         });
     }

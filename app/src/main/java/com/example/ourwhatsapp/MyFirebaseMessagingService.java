@@ -4,7 +4,6 @@ import android.app.NotificationChannel;
 import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Build;
-import android.util.Log;
 
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
@@ -15,17 +14,15 @@ import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private String CHANNEL_ID = "CHANNEL";
+    private final String CHANNEL_ID = "CHANNEL";
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
         // the NotificationChannel class is new and not in the support library
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            CharSequence name = CHANNEL_ID;
-            String description = CHANNEL_ID;
             int importance = NotificationManager.IMPORTANCE_DEFAULT;
-            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, name, importance);
-            channel.setDescription(description);
+            NotificationChannel channel = new NotificationChannel(CHANNEL_ID, CHANNEL_ID, importance);
+            channel.setDescription(CHANNEL_ID);
             // Register the channel with the system; you can't change the importance
             // or other notification behaviors after this
             NotificationManager notificationManager = getSystemService(NotificationManager.class);

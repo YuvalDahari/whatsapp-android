@@ -4,6 +4,10 @@ import androidx.room.Entity;
 import androidx.room.Index;
 import androidx.room.PrimaryKey;
 
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.TimeZone;
+
 @Entity(indices = {@Index(value = {"username"}, unique = true)})
 public class User {
     @PrimaryKey(autoGenerate = true)

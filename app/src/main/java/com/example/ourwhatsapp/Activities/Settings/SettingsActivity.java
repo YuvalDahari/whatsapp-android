@@ -38,6 +38,10 @@ public class SettingsActivity extends AppCompatActivity {
         boolean showLogout = getIntent().getBooleanExtra("SHOW_LOGOUT", false);
         binding.logoutButton.setVisibility(showLogout ? View.VISIBLE : View.GONE);
 
+        boolean showServerURL = getIntent().getBooleanExtra("SHOW_URL", false);
+        binding.serverPort.setVisibility(showServerURL ? View.VISIBLE : View.GONE);
+        binding.serverTag.setVisibility(showServerURL ? View.VISIBLE : View.GONE);
+
         binding.serverPort.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {

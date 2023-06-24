@@ -120,6 +120,7 @@ public class ConversationsActivity extends AppCompatActivity {
         binding.settingsBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
             intent.putExtra("SHOW_LOGOUT", true);
+            intent.putExtra("SHOW_URL", false);
             startActivity(intent);
         });
     }
