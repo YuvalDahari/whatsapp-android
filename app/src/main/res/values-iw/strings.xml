@@ -26,11 +26,12 @@
         <string name="new_message">הודעה חדשה</string>
         <string name="add_new_chat">חבר חדש לרשימה?\nבוא נוסיף אותו</string>
         <string name="cancelBtn">ביטול</string>
-        <string name="exitBtn">יציאה</string>
+        <string name="confirmBtn">אישור</string>
+        <string name="logoutBtn">התנתקות</string>
         <string name="current_username">שם משתמש נוכחי</string>
         <string name="current_display_name">שם תצוגה נוכחי</string>
         <string name="server_port">פורט השרת:</string>
-        <string name="current_server_port">פורט נוכחי</string>
+        <string name="new_server_port">פורט נוכחי</string>
         <string name="current_password">סיסמה נוכחית</string>
         <string name="settings">הגדרות</string>
         <string name="update_photo_btn">החלפת\nתמונת פרופיל</string>

@@ -2,10 +2,7 @@ package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.view.View;
-import android.widget.ListView;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Repositories.ChatRepository;
@@ -38,6 +35,7 @@ public class ChatActivity extends AppCompatActivity {
             finish();
         }
 
+        assert activityIntent != null;
         String userName = activityIntent.getStringExtra("userName");
         String profilePicture = activityIntent.getStringExtra("profilePicture");
         String chatID = getIntent().getStringExtra("id");
@@ -52,31 +50,20 @@ public class ChatActivity extends AppCompatActivity {
 
         chatRepository = new ChatRepository(getApplicationContext(), chatID);
 
-        viewModel.getProfilePicture().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String profilePicture) {
-                try {
-                    Utils.displayBase64Image(profilePicture, binding.userImageProfileImage);
-                } catch (Exception ex) {
+        viewModel.getProfilePicture().observe(this, profilePicture1 -> {
+            try {
+                Utils.displayBase64Image(profilePicture1, binding.userImageProfileImage);
+            } catch (Exception ignored) {
 
-                }
             }
         });
 
-        viewModel.getDisplayName().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(String displayName) {
-                binding.userTextUserName.setText(displayName);
-            }
-        });
+        viewModel.getDisplayName().observe(this, displayName -> binding.userTextUserName.setText(displayName));
 
-        viewModel.getChat().observe(this, new Observer<List<Message>>() {
-            @Override
-            public void onChanged(List<Message> newMessages) {
-                messages.clear();
-                messages.addAll(newMessages);
-                messageAdapter.notifyDataSetChanged();
-            }
+        viewModel.getChat().observe(this, newMessages -> {
+            messages.clear();
+            messages.addAll(newMessages);
+            messageAdapter.notifyDataSetChanged();
         });
 
         binding.returnBtn.setOnClickListener(view -> finish());

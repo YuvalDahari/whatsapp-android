@@ -147,7 +147,7 @@
                 tools:ignore="ButtonStyle,SpeakableTextPresentCheck,TouchTargetSizeCheck" />
 
             <Button
-                android:id="@+id/navToMiniSettings"
+                android:id="@+id/navToSettings"
                 android:layout_width="70dp"
                 android:layout_height="30dp"
                 android:layout_margin="0dp"

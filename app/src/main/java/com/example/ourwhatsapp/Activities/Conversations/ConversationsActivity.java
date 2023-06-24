@@ -1,6 +1,6 @@
 package com.example.ourwhatsapp.Activities.Conversations;
 
-import android.content.DialogInterface;
+
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
@@ -10,7 +10,6 @@ import android.widget.Toast;
 import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
@@ -21,11 +20,10 @@ import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
 
 import java.util.ArrayList;
-import java.util.List;
+
 
 public class ConversationsActivity extends AppCompatActivity {
     private ConversationsViewModel viewModel;
-    private ActivityListBinding binding;
     private ConversationsAdapter adapter;
     private ArrayList<Conversation> conversations;
     private ConversationRepository conversationRepository;
@@ -34,7 +32,7 @@ public class ConversationsActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        binding = ActivityListBinding.inflate(getLayoutInflater());
+        com.example.ourwhatsapp.databinding.ActivityListBinding binding = ActivityListBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
 
         conversationRepository = new ConversationRepository(getApplicationContext());
@@ -43,13 +41,10 @@ public class ConversationsActivity extends AppCompatActivity {
 
         conversations = new ArrayList<>();
 
-        viewModel.getUsers().observe(this, new Observer<List<Conversation>>() {
-            @Override
-            public void onChanged(List<Conversation> newConversations) {
-                conversations.clear();
-                conversations.addAll(newConversations);
-                adapter.notifyDataSetChanged();
-            }
+        viewModel.getUsers().observe(this, newConversations -> {
+            conversations.clear();
+            conversations.addAll(newConversations);
+            adapter.notifyDataSetChanged();
         });
 
         adapter = new ConversationsAdapter(getApplicationContext(), conversations);
@@ -95,39 +90,32 @@ public class ConversationsActivity extends AppCompatActivity {
             builder.setView(input);
 
             // Set up the buttons
-            builder.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    String newUsername = input.getText().toString();
-                    if (newUsername.equals(AppDatabase.getUsername())) {
-                        Toast.makeText(getApplicationContext(), "You can not create chat with yourself!", Toast.LENGTH_SHORT).show();
+            builder.setPositiveButton("OK", (dialog, which) -> {
+                String newUsername = input.getText().toString();
+                if (newUsername.equals(AppDatabase.getUsername())) {
+                    Toast.makeText(getApplicationContext(), "You can not create chat with yourself!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if (newUsername.isEmpty()) {
+                    Toast.makeText(getApplicationContext(), "Username can not be empty!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                for (Conversation user : conversations) {
+                    if (user.getUserName().equals(newUsername)) {
+                        Toast.makeText(getApplicationContext(), "Chat already exists!", Toast.LENGTH_SHORT).show();
                         return;
                     }
-                    if (newUsername.isEmpty()) {
-                        Toast.makeText(getApplicationContext(), "Username can not be empty!", Toast.LENGTH_SHORT).show();
-                        return;
-                    }
-                    for (Conversation user : conversations) {
-                        if (user.getUserName().equals(newUsername)) {
-                            Toast.makeText(getApplicationContext(), "Chat already exists!", Toast.LENGTH_SHORT).show();
-                            return;
-                        }
-                    }
-                    conversationRepository.createChat(newUsername, viewModel.getUsers());
                 }
+                conversationRepository.createChat(newUsername, viewModel.getUsers());
             });
-            builder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                @Override
-                public void onClick(DialogInterface dialog, int which) {
-                    dialog.cancel();
-                }
-            });
+            builder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
 
             builder.show();
         });
 
         binding.settingsBtn.setOnClickListener(view -> {
             Intent intent = new Intent(getApplicationContext(), SettingsActivity.class);
+            intent.putExtra("SHOW_LOGOUT", true);
             startActivity(intent);
         });
     }

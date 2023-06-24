@@ -9,6 +9,7 @@ import com.example.ourwhatsapp.API.Entities.CreateUserReq;
 import com.example.ourwhatsapp.API.Entities.GetTokenReq;
 import com.example.ourwhatsapp.API.WebServiceAPI;
 import com.example.ourwhatsapp.Database.DatabaseDAOs.UserDao;
+import com.example.ourwhatsapp.Utils;
 
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -27,7 +28,7 @@ public class UserAPI {
         this.userDao = userDao;
 
         this.retrofit = new Retrofit.Builder()
-                .baseUrl("http://10.0.2.2:12345/api/")
+                .baseUrl(Utils.getURL(context))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

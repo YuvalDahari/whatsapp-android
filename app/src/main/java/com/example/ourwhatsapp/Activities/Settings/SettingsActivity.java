@@ -1,82 +1,108 @@
 package com.example.ourwhatsapp.Activities.Settings;
 
-import com.example.ourwhatsapp.Utils;
-
+import android.content.Intent;
+import android.content.SharedPreferences;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.widget.Button;
+import android.text.Editable;
+import android.text.TextWatcher;
+import android.view.View;
+import android.widget.AdapterView;
+import android.widget.Toast;
 
-import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
-import androidx.lifecycle.ViewModelProvider;
+import androidx.appcompat.app.AppCompatDelegate;
 
-import com.example.ourwhatsapp.R;
-import com.example.ourwhatsapp.ViewModels.SettingsViewModel;
+import com.example.ourwhatsapp.Database.AppDatabase;
+import com.example.ourwhatsapp.MainActivity;
+import com.example.ourwhatsapp.Utils;
 import com.example.ourwhatsapp.databinding.ActivitySettingsBinding;
 
-
-
 public class SettingsActivity extends AppCompatActivity {
-    private SettingsViewModel viewModel;
-    private ActivitySettingsBinding binding;
 
-    Button exitButton;
+    private ActivitySettingsBinding binding;
+    private AppDatabase db = AppDatabase.getInstance(this);
+
+    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        viewModel = new ViewModelProvider(this).get(SettingsViewModel.class);
-
         binding = ActivitySettingsBinding.inflate(getLayoutInflater());
+        sharedPreferences = getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
+
+        boolean showLogout = getIntent().getBooleanExtra("SHOW_LOGOUT", false);
+        binding.logoutButton.setVisibility(showLogout ? View.VISIBLE : View.GONE);
+
+        binding.serverPort.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
+
+            @Override
+            public void onTextChanged(CharSequence s, int start, int before, int count) {}
+
+            @Override
+            public void afterTextChanged(Editable s) {
+                if (Utils.isValidURL(s.toString())) {
+                    binding.serverPort.setTextColor(Color.RED);
+                } else {
+                    binding.serverPort.setTextColor(Color.BLACK);
+                }
+            }
+        });
         setContentView(binding.getRoot());
 
-        viewModel.getProfilePicture().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String profilePicture){
-                Utils.displayBase64Image(profilePicture, binding.photoImageView);
-            }
+        // Load saved theme
+        String savedTheme = sharedPreferences.getString("theme", "Classic");
+        if ("Dark".equals(savedTheme)) {
+            binding.themeSpinner.setSelection(1);
+        } else {
+            binding.themeSpinner.setSelection(0);
+        }
+
+        binding.logoutButton.setOnClickListener(view -> {
+            new Thread(db::clearAllTables).start();
+            // Start MainActivity after logging out
+            Intent intent = new Intent(SettingsActivity.this, MainActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+            startActivity(intent);
+            finish();
         });
 
-        viewModel.getDisplayName().observe(this, new Observer<String>() {
+        binding.themeSpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
-            public void onChanged(@Nullable final String displayName){
-                binding.displayName.setText(displayName);
-            }
-        });
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
-        viewModel.getServerURL().observe(this, new Observer<String>() {
-            @Override
-            public void onChanged(@Nullable final String serverURL){
-                binding.serverPort.setText(serverURL);
-            }
-        });
+                String selectedTheme = parent.getItemAtPosition(position).toString();
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putString("theme", selectedTheme);
+                editor.apply();
 
-        viewModel.getTheme().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable final Integer theme) {
-                if (theme == null) {
-                    binding.themeSpinner.setSelection(1);
+                if ("Dark".equals(selectedTheme)) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
                 } else {
-                    binding.themeSpinner.setSelection(theme);
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
                 }
             }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) { }
         });
 
-        viewModel.getLanguage().observe(this, new Observer<Integer>() {
-            @Override
-            public void onChanged(@Nullable final Integer language) {
-                if (language == null) {
-                    binding.languageSpinner.setSelection(1);
-                } else {
-                    binding.languageSpinner.setSelection(language);
-                }
+        binding.exitBtn.setOnClickListener(view -> {
+            String url = binding.serverPort.getText().toString();
+            if (url.isEmpty()) {
+                finish();
+            } else if (Utils.isValidURL(url)) {
+                Toast.makeText(getApplicationContext(), "Invalid url", Toast.LENGTH_LONG / 2).show();
+            } else {
+                new Thread(() -> {
+                    SharedPreferences.Editor editor = sharedPreferences.edit();
+                    editor.putString("url", binding.serverPort.getText().toString());
+                    editor.apply();
+                }).start();
+                finish();
             }
         });
-
-
-        exitButton = findViewById(R.id.exitBtn);
-        exitButton.setOnClickListener(view -> finish());
     }
-
 }
-
