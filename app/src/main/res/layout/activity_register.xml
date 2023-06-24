@@ -169,7 +169,7 @@
             android:layout_marginBottom="@dimen/fab_margin"
             android:clickable="true"
             android:scaleType="centerCrop"
-            android:src="@drawable/default_img"
+            android:src="@drawable/no_img"
             tools:ignore="SpeakableTextPresentCheck"
             android:contentDescription="@string/profile_picture"
             android:focusable="true" />
