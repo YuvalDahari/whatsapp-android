@@ -51,4 +51,10 @@ public class ChatRepository {
             chatAPI.getMessages(AppDatabase.getToken(), chatID, messages);
         }).start();
     }
+
+    public void sendMessage(String message, String chatID, MutableLiveData<List<Message>> messages) {
+        new Thread(() -> {
+            chatAPI.sendMessage(AppDatabase.getToken(), chatID, message, messages);
+        }).start();
+    }
 }

@@ -6,6 +6,8 @@ import android.widget.Toast;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.API.Entities.Chat;
+import com.example.ourwhatsapp.API.Entities.CreateChatReq;
+import com.example.ourwhatsapp.API.Entities.SendMessageReq;
 import com.example.ourwhatsapp.API.WebServiceAPI;
 import com.example.ourwhatsapp.Activities.Conversations.Conversation;
 import com.example.ourwhatsapp.Activities.Messages.Message;
@@ -45,7 +47,7 @@ public class ChatAPI {
     }
 
     public void getConversations(String token, MutableLiveData<List<Conversation>> users) {
-        Call<List<Chat>> getChats  = webServiceAPI.getChats(token);
+        Call<List<Chat>> getChats = webServiceAPI.getChats(token);
         getChats.enqueue(new Callback<List<Chat>>() {
             @Override
             public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
@@ -91,7 +93,7 @@ public class ChatAPI {
     }
 
     public void getMessages(String token, String chatID, MutableLiveData<List<Message>> messages) {
-        Call<List<com.example.ourwhatsapp.API.Entities.Message>> getMessages  = webServiceAPI.getMessages(token, chatID);
+        Call<List<com.example.ourwhatsapp.API.Entities.Message>> getMessages = webServiceAPI.getMessages(token, chatID);
         getMessages.enqueue(new Callback<List<com.example.ourwhatsapp.API.Entities.Message>>() {
             @Override
             public void onResponse(Call<List<com.example.ourwhatsapp.API.Entities.Message>> call, Response<List<com.example.ourwhatsapp.API.Entities.Message>> response) {
@@ -118,6 +120,101 @@ public class ChatAPI {
 
             @Override
             public void onFailure(Call<List<com.example.ourwhatsapp.API.Entities.Message>> call, Throwable t) {
+                Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void deleteChat(String token, String chatID, MutableLiveData<List<Conversation>> users) {
+        Call<Void> deleteChat = webServiceAPI.deleteChat(token, chatID);
+
+        deleteChat.enqueue(new Callback<Void>() {
+            @Override
+            public void onResponse(Call<Void> call, Response<Void> response) {
+                if (response.isSuccessful()) {
+                    List<Conversation> newUsers = new ArrayList<>();
+                    for (Conversation user : users.getValue()) {
+                        if (!user.getChatID().equals(chatID)) {
+                            newUsers.add(user);
+                        }
+                    }
+                    users.postValue(newUsers);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Void> call, Throwable t) {
+                Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void createChat(String token, String username, MutableLiveData<List<Conversation>> users) {
+        Call<Chat> createChat = webServiceAPI.createChat(token, new CreateChatReq(username));
+
+        createChat.enqueue(new Callback<Chat>() {
+            @Override
+            public void onResponse(Call<Chat> call, Response<Chat> response) {
+                if (response.code() == 400) {
+                    Toast.makeText(context, "Username does not exists!", Toast.LENGTH_SHORT).show();
+                } else if (response.code() == 200) {
+                    Chat newChat = response.body();
+                    List<Conversation> newUsers = users.getValue();
+                    newUsers.add(new Conversation(
+                            newChat.getUser().getUsername(),
+                            newChat.getUser().getProfilePic(),
+                            null, null, newChat.getId()
+                    ));
+                    List<User> listOfUser = new ArrayList<>();
+                    listOfUser.add(new User(
+                            newChat.getId(),
+                            newChat.getUser().getDisplayName(),
+                            newChat.getUser().getUsername(),
+                            newChat.getUser().getDisplayName(),
+                            null, null
+                    ));
+                    new Thread(() -> {
+                        userDao.insert(listOfUser);
+                    }).start();
+                    users.postValue(newUsers);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<Chat> call, Throwable t) {
+                Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        });
+    }
+
+    public void sendMessage(String token, String chatID, String content, MutableLiveData<List<Message>> messages) {
+        Call<com.example.ourwhatsapp.API.Entities.Message> sendMessage = webServiceAPI.sendMessage(token, chatID,
+                new SendMessageReq(content));
+
+        sendMessage.enqueue(new Callback<com.example.ourwhatsapp.API.Entities.Message>() {
+            @Override
+            public void onResponse(Call<com.example.ourwhatsapp.API.Entities.Message> call, Response<com.example.ourwhatsapp.API.Entities.Message> response) {
+                if (response.isSuccessful()) {
+                    com.example.ourwhatsapp.API.Entities.Message newMessage = response.body();
+                    List<Message> newMessages = messages.getValue();
+                    newMessages.add(0, new Message(
+                       newMessage.getContent(),
+                       newMessage.getCreated(),
+                       Message.MessageType.SENT
+                    ));
+                    List<Messages> listOfMessage = new ArrayList<>();
+                    listOfMessage.add(new Messages(
+                       chatID, newMessage.getContent(), newMessage.getSender().getUsername(), newMessage.getCreated()
+                    ));
+                    new Thread(() -> {
+                        messagesDao.insert(listOfMessage);
+                    }).start();
+                    messages.postValue(newMessages);
+                }
+            }
+
+            @Override
+            public void onFailure(Call<com.example.ourwhatsapp.API.Entities.Message> call, Throwable t) {
                 Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
             }
         });
