@@ -163,7 +163,7 @@ const sendMessage = async (sender, chatID, messageContent) => {
         // send push notification
         var FCM = require('fcm-node');
 
-        var serverKey = 'AAAAhJKNxlE:APA91bG-EiB3fKIfvk-aYV0QyzmGXUjSeGWR_hEDUT7yOoXOLWpbXQPKNjdjLGQMac1WtPg8aeaJcH7yXfh40T5DCgbkFzk43WkLm__v8eo_MOKHIrrQL-S0Iugd3zCf2ZMFB65w19Nl';
+        var serverKey = process.env.SERVER_KEY;
         const secondUser = chat.users[0].equals(user._id) ? chat.users[1] : chat.users[0];
         const secondUserData = await UserService.getUserByID(secondUser);
         var topic1 = chatID + "_" + secondUserData.username;

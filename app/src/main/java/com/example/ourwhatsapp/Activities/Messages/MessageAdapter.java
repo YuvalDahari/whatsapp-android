@@ -10,6 +10,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.example.ourwhatsapp.R;
+import com.example.ourwhatsapp.Utils;
 
 import java.util.List;
 
@@ -36,7 +37,7 @@ public class MessageAdapter extends ArrayAdapter<Message> {
         LinearLayout linearLayout = convertView.findViewById(R.id.mainLayout);
 
         msgTextView.setText(message.getContent());
-        timeTextView.setText(message.getTime());
+        timeTextView.setText(Utils.reformatTime(message.getTime()));
 
         int backgroundResId;
         if (message.getMessageType() == Message.MessageType.SENT) {

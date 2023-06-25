@@ -99,4 +99,12 @@ public class Utils {
         return savedURL;
     }
 
+    public static String reformatTime(String time) {
+        try {
+            return time.substring(time.indexOf('T') + 1, time.lastIndexOf(':'));
+        } catch (Exception e) {
+            return time;
+        }
+    }
+
 }

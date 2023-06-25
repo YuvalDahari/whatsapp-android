@@ -38,7 +38,7 @@ public class ConversationsAdapter extends ArrayAdapter<Conversation> {
         }
         ((TextView)convertView.findViewById(R.id.user_name)).setText(conversation.getUserName());
         ((TextView)convertView.findViewById(R.id.last_massage)).setText(conversation.getLastMassage());
-        ((TextView)convertView.findViewById(R.id.time)).setText(conversation.getLastMassageSendingTime());
+        ((TextView)convertView.findViewById(R.id.time)).setText(Utils.reformatTime(conversation.getLastMassageSendingTime()));
 
         return convertView;
     }

@@ -22,10 +22,7 @@ public class Message {
     }
 
     public String getCreated() {
-        String protectTime = created;
-        int firstTIndex = protectTime.indexOf('T');
-        int lastColonIndex = protectTime.lastIndexOf(':');
-        return protectTime.substring(firstTIndex + 1, lastColonIndex);
+        return created;
     }
 
     public void setCreated(String created) {
