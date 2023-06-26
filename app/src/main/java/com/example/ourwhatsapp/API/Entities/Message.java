@@ -2,8 +2,8 @@ package com.example.ourwhatsapp.API.Entities;
 
 public class Message {
     private String id;
-    private String created;
-    private User sender;
+    private final String created;
+    private final User sender;
     private String content;
 
     public Message(String id, String created, User sender, String content) {
@@ -24,17 +24,9 @@ public class Message {
     public String getCreated() {
         return created;
     }
-
-    public void setCreated(String created) {
-        this.created = created;
-    }
-
+    
     public User getSender() {
         return sender;
-    }
-
-    public void setSender(User sender) {
-        this.sender = sender;
     }
 
     public String getContent() {

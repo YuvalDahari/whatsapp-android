@@ -5,7 +5,7 @@ public class Chat {
 
     private User user;
 
-    private LastMessage lastMessage;
+    private final LastMessage lastMessage;
 
     public Chat(String id, User user, LastMessage lastMessage) {
         this.id = id;
@@ -31,10 +31,6 @@ public class Chat {
 
     public LastMessage getLastMessage() {
         return lastMessage;
-    }
-
-    public void setLastMessage(LastMessage lastMessage) {
-        this.lastMessage = lastMessage;
     }
 }
 

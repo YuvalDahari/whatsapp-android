@@ -7,13 +7,13 @@ import androidx.room.PrimaryKey;
 public class Messages {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String chatID;
+    private final String chatID;
 
-    private String content;
+    private final String content;
 
-    private String sender;
+    private final String sender;
 
-    private String date;
+    private final String date;
 
     public Messages( String chatID, String content, String sender, String date) {
         this.chatID = chatID;

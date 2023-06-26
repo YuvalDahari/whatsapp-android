@@ -50,7 +50,7 @@
             android:gravity="center"
             android:hint="@string/username_hint"
             android:inputType="textPersonName"
-            android:textColor="@color/textColor"
+            android:textColor="@color/hintColor"
             android:textColorHint="@color/hintColor"
             tools:ignore="TextContrastCheck" />
 
@@ -74,7 +74,7 @@
             android:gravity="center"
             android:hint="@string/password_hint"
             android:importantForAutofill="no"
-            android:textColor="@color/textColor"
+            android:textColor="@color/hintColor"
             android:textColorHint="@color/hintColor"
             tools:ignore="TextContrastCheck"
             android:inputType="textPassword" />

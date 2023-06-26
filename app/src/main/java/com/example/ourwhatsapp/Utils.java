@@ -2,12 +2,9 @@ package com.example.ourwhatsapp;
 
 import static android.content.Context.MODE_PRIVATE;
 
-import android.app.NotificationChannel;
-import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
-import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -19,10 +16,16 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
-
-    private static final String CHANNEL_ID = "CHANNEL_ID";
-
     public static void displayBase64Image(String base64String, ImageView imageView) {
+        if (!base64String.startsWith("data:image")) {
+            imageView.setImageResource(R.drawable.default_img);
+            Log.println(Log.INFO, "here:", "here:" + base64String);
+            return;
+        }
+
+        base64String = base64String.replace("data:image/jpeg;base64,", "");
+        base64String = base64String.replace("data:image/png;base64,", "");
+
         // Decode the Base64 string to a byte array
         byte[] imageBytes = Base64.decode(base64String, Base64.DEFAULT);
 
@@ -33,36 +36,11 @@ public class Utils {
         imageView.setImageBitmap(decodedImage);
     }
 
-    public static String imageToBase64(Context context, int resourceId) {
-        // Check if context is null
-        if(context == null){
-            return null;
-        }
-
-        // Load the image from the drawable resources
-        Bitmap bitmap = BitmapFactory.decodeResource(context.getResources(), resourceId);
-
-        // Check if bitmap is null
-        if(bitmap == null){
-            return null;
-        }
-
-        // Convert the Bitmap to a ByteArrayOutputStream
-        ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
-
-        // Convert the ByteArrayOutputStream to a byte array
-        byte[] byteArray = byteArrayOutputStream.toByteArray();
-
-        // Convert the byte array to a base64 string
-        return Base64.encodeToString(byteArray, Base64.DEFAULT);
-    }
-
     public static String imagePathToBase64(Bitmap bitmap){
         ByteArrayOutputStream byteArrayOutputStream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, byteArrayOutputStream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 100, byteArrayOutputStream);
         byte[] bytes = byteArrayOutputStream.toByteArray();
-        return Base64.encodeToString(bytes, Base64.DEFAULT);
+        return "data:image/png;base64," + Base64.encodeToString(bytes, Base64.DEFAULT);
     }
 
     public static boolean isValidDisplayName(String displayName) {

@@ -31,7 +31,6 @@ public class MainActivity extends AppCompatActivity {
 
     private ActivityMainBinding binding;
     private UserRepository userRepository;
-    private SharedPreferences sharedPreferences;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -47,7 +46,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         String savedTheme;
-        sharedPreferences = getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
+        SharedPreferences sharedPreferences = getSharedPreferences("OurLocalPlace", MODE_PRIVATE);
         savedTheme = sharedPreferences.getString("theme", "Classic");
 
         if ("Dark".equals(savedTheme)) {
@@ -109,7 +108,13 @@ public class MainActivity extends AppCompatActivity {
                 if (Utils.isValidUsername(s.toString())) {
                     binding.loginUsername.setTextColor(Color.RED);
                 } else {
-                    binding.loginUsername.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.loginUsername.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.loginUsername.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
@@ -128,7 +133,13 @@ public class MainActivity extends AppCompatActivity {
                 if (Utils.isValidPassword(s.toString())) {
                     binding.loginPassword.setTextColor(Color.RED);
                 } else {
-                    binding.loginPassword.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.loginPassword.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.loginPassword.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });

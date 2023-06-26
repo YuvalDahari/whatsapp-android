@@ -4,7 +4,6 @@ import androidx.lifecycle.MutableLiveData;
 import androidx.lifecycle.ViewModel;
 
 import com.example.ourwhatsapp.Activities.Conversations.Conversation;
-import com.example.ourwhatsapp.Database.AppDatabase;
 
 import java.util.ArrayList;
 import java.util.List;

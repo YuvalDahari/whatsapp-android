@@ -56,11 +56,7 @@ public class ChatActivity extends AppCompatActivity {
         chatRepository = new ChatRepository(getApplicationContext(), chatID);
 
         viewModel.getProfilePicture().observe(this, profilePicture1 -> {
-            try {
-                Utils.displayBase64Image(profilePicture1, binding.userImageProfileImage);
-            } catch (Exception ignored) {
-
-            }
+            Utils.displayBase64Image(profilePicture1, binding.userImageProfileImage);
         });
 
         viewModel.getDisplayName().observe(this, displayName -> binding.userTextUserName.setText(displayName));

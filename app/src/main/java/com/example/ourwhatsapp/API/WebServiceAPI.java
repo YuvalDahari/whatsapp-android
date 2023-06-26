@@ -1,13 +1,11 @@
 package com.example.ourwhatsapp.API;
 
 import com.example.ourwhatsapp.API.Entities.Chat;
-import com.example.ourwhatsapp.API.Entities.ChatData;
 import com.example.ourwhatsapp.API.Entities.CreateChatReq;
 import com.example.ourwhatsapp.API.Entities.CreateUserReq;
 import com.example.ourwhatsapp.API.Entities.GetTokenReq;
 import com.example.ourwhatsapp.API.Entities.Message;
 import com.example.ourwhatsapp.API.Entities.SendMessageReq;
-import com.example.ourwhatsapp.API.Entities.User;
 
 import java.util.List;
 
@@ -27,9 +25,6 @@ public interface WebServiceAPI {
     @POST("Chats")
     Call<Chat> createChat(@Header("Authorization") String token, @Body CreateChatReq req);
 
-    @GET("Chats/{id}")
-    Call<ChatData> getChat(@Header("Authorization") String token, @Path("id") String id);
-
     @DELETE("Chats/{id}")
     Call<Void> deleteChat(@Header("Authorization") String token, @Path("id") String id);
 
@@ -41,9 +36,6 @@ public interface WebServiceAPI {
 
     @POST("Tokens")
     Call<ResponseBody> getToken(@Body GetTokenReq req);
-
-    @GET("Users/{username}")
-    Call<User> getUser(@Header("Authorization") String token, @Path("username") String username);
 
     @POST("Users")
     Call<Void> createUser(@Body CreateUserReq req);

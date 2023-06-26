@@ -1,7 +1,7 @@
 package com.example.ourwhatsapp.API.Entities;
 
 public class SendMessageReq {
-    private String msg;
+    private final String msg;
 
     public SendMessageReq(String msg) {
         this.msg = msg;
@@ -9,9 +9,5 @@ public class SendMessageReq {
 
     public String getMsg() {
         return msg;
-    }
-
-    public void setMsg(String msg) {
-        this.msg = msg;
     }
 }

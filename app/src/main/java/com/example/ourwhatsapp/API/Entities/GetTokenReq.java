@@ -2,7 +2,7 @@ package com.example.ourwhatsapp.API.Entities;
 
 public class GetTokenReq {
     private String username;
-    private String password;
+    private final String password;
 
     public GetTokenReq(String username, String password) {
         this.username = username;
@@ -19,9 +19,5 @@ public class GetTokenReq {
 
     public String getPassword() {
         return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

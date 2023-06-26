@@ -9,8 +9,8 @@ import androidx.room.PrimaryKey;
 public class Settings {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String key;
-    private String value;
+    private final String key;
+    private final String value;
 
     public Settings(String key, String value) {
         this.key = key;
@@ -31,14 +31,6 @@ public class Settings {
 
     public void setId(int id) {
         this.id = id;
-    }
-
-    public void setKey(String key) {
-        this.key = key;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
     }
 
 }

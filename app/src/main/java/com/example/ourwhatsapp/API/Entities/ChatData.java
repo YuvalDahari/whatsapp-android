@@ -4,7 +4,7 @@ import java.util.List;
 
 public class ChatData {
     private String id;
-    private List<User> users;
+    private final List<User> users;
     private List<Message> messages;
 
     public ChatData(String id, List<User> users, List<Message> messages) {
@@ -23,10 +23,6 @@ public class ChatData {
 
     public List<User> getUsers() {
         return users;
-    }
-
-    public void setUsers(List<User> users) {
-        this.users = users;
     }
 
     public List<Message> getMessages() {

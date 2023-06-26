@@ -5,7 +5,7 @@ public class User {
 
     private String displayName;
 
-    private String profilePic;
+    private final String profilePic;
 
     public User(String username, String displayName, String profilePic) {
         this.username = username;
@@ -31,9 +31,5 @@ public class User {
 
     public String getProfilePic() {
         return profilePic;
-    }
-
-    public void setProfilePic(String profilePic) {
-        this.profilePic = profilePic;
     }
 }
