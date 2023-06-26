@@ -6,7 +6,6 @@ public class Conversation {
     private final String lastMassage;
     private final String lastMassageSendingTime;
     private final String chatID;
-
     private int hasNewMessage;
 
     public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime, String chatID) {
@@ -15,7 +14,6 @@ public class Conversation {
         this.lastMassage = lastMassage;
         this.lastMassageSendingTime = lastMassageSendingTime;
         this.chatID = chatID;
-        this.hasNewMessage = 0;
     }
 
     public String getChatID() {
@@ -42,9 +40,5 @@ public class Conversation {
 
     public void resetHasNewMessage() {
         hasNewMessage = 0;
-    }
-
-    public void addNewMessage() {
-        hasNewMessage++;
     }
 }

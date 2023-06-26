@@ -4,14 +4,12 @@ package com.example.ourwhatsapp.Activities.Conversations;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
-import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
@@ -25,8 +23,13 @@ import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
 import com.google.firebase.messaging.FirebaseMessaging;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
+import java.util.TimeZone;
 
 
 public class ConversationsActivity extends AppCompatActivity {
@@ -35,7 +38,7 @@ public class ConversationsActivity extends AppCompatActivity {
     private ArrayList<Conversation> conversations;
     private ConversationRepository conversationRepository;
 
-    private AppDatabase db = AppDatabase.getInstance(this);
+    private final AppDatabase db = AppDatabase.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -52,6 +55,37 @@ public class ConversationsActivity extends AppCompatActivity {
 
         viewModel.getUsers().observe(this, newConversations -> {
             conversations.clear();
+            newConversations.sort((o1, o2) -> {
+                String timeOfO1 = o1.getLastMassageSendingTime();
+                String timeOfO2 = o2.getLastMassageSendingTime();
+
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss.SSS'Z'", Locale.ENGLISH);
+                sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+                try {
+                    if (timeOfO1 != null && timeOfO2 != null) {
+                        Date date1 = sdf.parse(timeOfO1);
+                        Date date2 = sdf.parse(timeOfO2);
+
+                        if (date1 != null && date2 != null)
+                            return date2.compareTo(date1); // for descending order
+                        else if (date1 != null) // date2 is null
+                            return -1;
+                        else if (date2 != null) // date1 is null
+                            return 1;
+                    } else if (timeOfO1 != null) // timeOfO2 is null
+                        return -1;
+                    else if (timeOfO2 != null) // timeOfO1 is null
+                        return 1;
+
+                } catch (ParseException e) {
+                    e.printStackTrace();
+                }
+
+                return 0;
+            });
+
+
             conversations.addAll(newConversations);
             for (Conversation conversation : newConversations) {
                 FirebaseMessaging.getInstance().subscribeToTopic(conversation.getChatID() + "_" + AppDatabase.getUsername());
@@ -133,10 +167,7 @@ public class ConversationsActivity extends AppCompatActivity {
             startActivity(intent);
         });
 
-        MyFirebaseMessagingService.getLiveData().observe(this, s -> {
-            conversationRepository.loadConversations(viewModel.getUsers());
-            Log.println(Log.INFO, s, s);
-        });
+        MyFirebaseMessagingService.getLiveData().observe(this, s -> conversationRepository.loadConversations(viewModel.getUsers()));
     }
 
     @Override
@@ -158,15 +189,11 @@ public class ConversationsActivity extends AppCompatActivity {
                         }
                         db.clearAllTables();
                     }).start();
-                    // Start MainActivity after logging out
                     Intent intent = new Intent(ConversationsActivity.this, MainActivity.class);
                     intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
                     startActivity(intent);
                     finish();
                     finishAffinity();
-
-                    // Or you can use this to move the app to the background:
-                    // moveTaskToBack(true);
                 })
                 .setNegativeButton("No", null)
                 .show();
