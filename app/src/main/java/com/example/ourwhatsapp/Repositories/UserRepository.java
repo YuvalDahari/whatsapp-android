@@ -22,7 +22,7 @@ public class UserRepository {
         AppDatabase db = AppDatabase.getInstance(context);
         userDao = db.userDao();
         settingsDao = db.settingsDao();
-        userAPI = new UserAPI(userDao, context);
+        userAPI = new UserAPI(context);
     }
 
     public MutableLiveData<String> tryLogin(String username, String password) {

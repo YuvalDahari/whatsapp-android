@@ -2,9 +2,12 @@ package com.example.ourwhatsapp;
 
 import static android.content.Context.MODE_PRIVATE;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
 import android.content.SharedPreferences;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.util.Base64;
 import android.util.Log;
 import android.widget.ImageView;
@@ -16,6 +19,9 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class Utils {
+
+    private static final String CHANNEL_ID = "CHANNEL_ID";
+
     public static void displayBase64Image(String base64String, ImageView imageView) {
         // Decode the Base64 string to a byte array
         byte[] imageBytes = Base64.decode(base64String, Base64.DEFAULT);
@@ -97,6 +103,14 @@ public class Utils {
         }
         savedURL += "/api/";
         return savedURL;
+    }
+
+    public static String reformatTime(String time) {
+        try {
+            return time.substring(time.indexOf('T') + 1, time.lastIndexOf(':'));
+        } catch (Exception e) {
+            return time;
+        }
     }
 
 }

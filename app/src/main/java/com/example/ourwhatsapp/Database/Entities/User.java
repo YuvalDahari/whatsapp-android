@@ -8,13 +8,12 @@ import androidx.room.PrimaryKey;
 public class User {
     @PrimaryKey(autoGenerate = true)
     private int id;
-    private String chatID;
+    private final String chatID;
     private String displayName;
-    private String username;
-    private String profilePhoto;
-    private String lastMessage;
-
-    private String lastMassageSendingTime;
+    private final String username;
+    private final String profilePhoto;
+    private final String lastMessage;
+    private final String lastMassageSendingTime;
     public User(String chatID, String displayName, String username, String profilePhoto, String lastMessage, String lastMassageSendingTime) {
         this.chatID = chatID;
         this.displayName = displayName;
@@ -28,16 +27,8 @@ public class User {
         return lastMessage;
     }
 
-    public void setLastMessage(String lastMessage) {
-        this.lastMessage = lastMessage;
-    }
-
     public String getLastMassageSendingTime() {
         return lastMassageSendingTime;
-    }
-
-    public void setLastMassageSendingTime(String lastMassageSendingTime) {
-        this.lastMassageSendingTime = lastMassageSendingTime;
     }
 
     public int getId() {
@@ -62,10 +53,6 @@ public class User {
 
     public void setDisplayName(String newName) {
         this.displayName = newName;
-    }
-
-    public void setProfilePhoto(String newProfilePicture) {
-        this.profilePhoto = newProfilePicture;
     }
 
     public void setId(int id) {

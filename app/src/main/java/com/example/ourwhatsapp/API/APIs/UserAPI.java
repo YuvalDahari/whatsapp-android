@@ -21,11 +21,9 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class UserAPI {
     private Retrofit retrofit;
     private WebServiceAPI webServiceAPI;
-    private UserDao userDao;
     private Context context;
 
-    public UserAPI(UserDao userDao, Context context) {
-        this.userDao = userDao;
+    public UserAPI(Context context) {
 
         this.retrofit = new Retrofit.Builder()
                 .baseUrl(Utils.getURL(context))
@@ -49,12 +47,14 @@ public class UserAPI {
                         res.postValue(null);
                     }
                 } else {
+                    Toast.makeText(context, "code:" + response.code(), Toast.LENGTH_SHORT).show();
                     res.postValue(null);
                 }
             }
 
             @Override
             public void onFailure(Call<ResponseBody> call, Throwable t) {
+                Toast.makeText(context, "error:" + t.getMessage(), Toast.LENGTH_SHORT).show();
                 res.postValue(null);
             }
         });
@@ -74,9 +74,5 @@ public class UserAPI {
                 res.postValue(500);
             }
         });
-    }
-
-    public void getCurrentUser(String username, String token, MutableLiveData<Integer> res) {
-
     }
 }

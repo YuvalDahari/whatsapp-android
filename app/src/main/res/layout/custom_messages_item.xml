@@ -19,18 +19,19 @@
 
         <TextView
             android:id="@+id/msg"
-            android:textStyle="bold"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:fontFamily="casual"
-            tools:text="@string/dummy_msg"
-            android:textSize="20sp"
-            android:textColor="@color/textColor"
             android:clickable="false"
+            android:fontFamily="casual"
+            android:textColor="@color/textColor"
+            android:textSize="20sp"
+            android:textStyle="bold"
             app:layout_constraintBottom_toTopOf="@+id/time"
-            app:layout_constraintEnd_toStartOf="@+id/time"
+            app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toTopOf="parent"
+            tools:text="@string/dummy_msg" />
+
 
         <TextView
             android:id="@+id/time"

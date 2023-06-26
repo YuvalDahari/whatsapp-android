@@ -6,6 +6,7 @@ public class Conversation {
     private final String lastMassage;
     private final String lastMassageSendingTime;
     private final String chatID;
+    private int hasNewMessage;
 
     public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime, String chatID) {
         this.userName = userName;
@@ -33,5 +34,11 @@ public class Conversation {
 
     public String getUserName() {
         return userName;
+    }
+
+    public int getHasNewMessage() {return hasNewMessage;}
+
+    public void resetHasNewMessage() {
+        hasNewMessage = 0;
     }
 }

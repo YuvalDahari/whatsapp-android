@@ -56,7 +56,7 @@
                 android:hint="@string/new_server_port"
                 android:importantForAutofill="no"
                 android:inputType="textPersonName"
-                android:textColor="@color/textColor"
+                android:textColor="@color/hintColor"
                 android:textColorHint="@color/hintColor"
                 tools:ignore="TextContrastCheck" />
         </LinearLayout>

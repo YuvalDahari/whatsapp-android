@@ -24,7 +24,7 @@ const io = new Server(server, {
 const cors = require("cors");
 app.use(cors());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.json());
+app.use(express.json({limit : '1000mb'}));
 
 app.use(express.static('public'));
 app.get('/messages', function(req, res) {
