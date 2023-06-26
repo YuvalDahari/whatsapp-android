@@ -25,7 +25,7 @@ import java.util.List;
 public class SettingsActivity extends AppCompatActivity {
 
     private ActivitySettingsBinding binding;
-    private AppDatabase db = AppDatabase.getInstance(this);
+    private final AppDatabase db = AppDatabase.getInstance(this);
 
     private SharedPreferences sharedPreferences;
 

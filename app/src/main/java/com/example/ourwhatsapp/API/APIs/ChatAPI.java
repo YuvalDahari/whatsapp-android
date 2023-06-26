@@ -1,9 +1,7 @@
 package com.example.ourwhatsapp.API.APIs;
 
-import static android.content.Context.MODE_PRIVATE;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 import android.widget.Toast;
 
 import androidx.lifecycle.MutableLiveData;

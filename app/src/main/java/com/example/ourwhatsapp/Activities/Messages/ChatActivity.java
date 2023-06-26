@@ -1,7 +1,6 @@
 package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
-import android.database.DataSetObserver;
 import android.os.Bundle;
 import android.widget.AbsListView;
 
