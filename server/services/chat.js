@@ -171,12 +171,19 @@ const sendMessage = async (sender, chatID, messageContent) => {
 
         console.log(topic1);
 
+        const firstUsername = chat.users[0].equals(user._id) ? chat.users[0] : chat.users[1];
+        const firstUserData = await UserService.getUserByID(firstUsername);
+
         var pushNotificationMessage = {
             to: "/topics/" + topic1,
             notification: {
-                title: 'Test message',
-                body: 'chatID:' + chatID + ':newMessage'
+                title: 'Message From: ' + firstUserData.displayName,
+                body: newMessage.content
             },
+            data: {
+                chatID: chatID,
+                content: newMessage.content,
+            }
         };
 
         fcm.send(pushNotificationMessage, function (err, response) {

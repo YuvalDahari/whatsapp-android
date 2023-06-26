@@ -5,16 +5,29 @@ import android.app.NotificationManager;
 import android.content.pm.PackageManager;
 import android.os.Build;
 
+
 import androidx.annotation.NonNull;
 import androidx.core.app.ActivityCompat;
 import androidx.core.app.NotificationCompat;
 import androidx.core.app.NotificationManagerCompat;
+import androidx.lifecycle.MutableLiveData;
 
 import com.google.firebase.messaging.FirebaseMessagingService;
 import com.google.firebase.messaging.RemoteMessage;
 
+import java.util.Map;
+
 public class MyFirebaseMessagingService extends FirebaseMessagingService {
-    private final String CHANNEL_ID = "CHANNEL";
+    private final String CHANNEL_ID = "CHANNEL_ID";
+
+    private static MutableLiveData<String> liveData;
+
+    public static MutableLiveData<String> getLiveData() {
+        if (MyFirebaseMessagingService.liveData == null) {
+            MyFirebaseMessagingService.liveData = new MutableLiveData<>();
+        }
+        return MyFirebaseMessagingService.liveData;
+    }
 
     private void createNotificationChannel() {
         // Create the NotificationChannel, but only on API 26+ because
@@ -34,14 +47,21 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
     public void onMessageReceived(@NonNull RemoteMessage remoteMessage) {
         super.onMessageReceived(remoteMessage);
         createNotificationChannel();
-        getFirebaseMessage(remoteMessage.getNotification().getTitle(), remoteMessage.getNotification().getBody());
+
+        Map<String, String> data = remoteMessage.getData();
+        String title = remoteMessage.getNotification().getTitle();
+        String chatID = data.get("chatID");
+        String messageContent = data.get("content");
+
+        MyFirebaseMessagingService.getLiveData().postValue(chatID);
+        getFirebaseMessage(title, remoteMessage.getNotification().getBody());
     }
 
-    public void getFirebaseMessage(String title, String msg) {
+    public void getFirebaseMessage(String title, String messageContent) {
         NotificationCompat.Builder builder = new NotificationCompat.Builder(this, CHANNEL_ID)
                 .setSmallIcon(R.drawable.ic_launcher)
                 .setContentTitle(title)
-                .setContentText(msg)
+                .setContentText(messageContent)
                 .setPriority(NotificationCompat.PRIORITY_DEFAULT);
 
         NotificationManagerCompat notificationManager = NotificationManagerCompat.from(this);
@@ -50,6 +70,6 @@ public class MyFirebaseMessagingService extends FirebaseMessagingService {
         if (ActivityCompat.checkSelfPermission(this, android.Manifest.permission.POST_NOTIFICATIONS) != PackageManager.PERMISSION_GRANTED) {
             return;
         }
-        notificationManager.notify(100, builder.build());
+        notificationManager.notify(1, builder.build());
     }
 }

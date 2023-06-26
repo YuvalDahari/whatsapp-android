@@ -1,9 +1,14 @@
 package com.example.ourwhatsapp.Activities.Messages;
 
 import android.content.Intent;
+import android.database.DataSetObserver;
 import android.os.Bundle;
+import android.widget.AbsListView;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
+
+import com.example.ourwhatsapp.MyFirebaseMessagingService;
 import com.example.ourwhatsapp.R;
 import com.example.ourwhatsapp.Repositories.ChatRepository;
 import com.example.ourwhatsapp.Utils;
@@ -46,6 +51,7 @@ public class ChatActivity extends AppCompatActivity {
         messages = new ArrayList<>();
 
         messageAdapter = new MessageAdapter(this, R.layout.custom_messages_item, messages);
+        binding.listView.setTranscriptMode((AbsListView.TRANSCRIPT_MODE_ALWAYS_SCROLL));
         binding.listView.setAdapter(messageAdapter);
 
         chatRepository = new ChatRepository(getApplicationContext(), chatID);
@@ -64,6 +70,7 @@ public class ChatActivity extends AppCompatActivity {
             messages.clear();
             messages.addAll(newMessages);
             messageAdapter.notifyDataSetChanged();
+            binding.listView.setSelection(messageAdapter.getCount() - 1);
         });
 
         binding.returnBtn.setOnClickListener(view -> finish());
@@ -72,6 +79,10 @@ public class ChatActivity extends AppCompatActivity {
             chatRepository.sendMessage(binding.messageEditText.getText().toString(),
                     chatID, viewModel.getChat());
             binding.messageEditText.setText(null);
+        });
+
+        MyFirebaseMessagingService.getLiveData().observe(this, s -> {
+            chatRepository.loadMessages(viewModel.getChat());
         });
     }
 

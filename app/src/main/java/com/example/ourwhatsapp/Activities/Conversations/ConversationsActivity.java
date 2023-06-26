@@ -4,23 +4,29 @@ package com.example.ourwhatsapp.Activities.Conversations;
 import android.content.Intent;
 import android.os.Bundle;
 import android.text.InputType;
+import android.util.Log;
 import android.widget.EditText;
 import android.widget.Toast;
 
 import android.app.AlertDialog;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 
 import com.example.ourwhatsapp.Activities.Messages.ChatActivity;
 import com.example.ourwhatsapp.Activities.Settings.SettingsActivity;
 import com.example.ourwhatsapp.Database.AppDatabase;
+import com.example.ourwhatsapp.Database.Entities.User;
+import com.example.ourwhatsapp.MainActivity;
+import com.example.ourwhatsapp.MyFirebaseMessagingService;
 import com.example.ourwhatsapp.Repositories.ConversationRepository;
 import com.example.ourwhatsapp.ViewModels.ConversationsViewModel;
 import com.example.ourwhatsapp.databinding.ActivityListBinding;
 import com.google.firebase.messaging.FirebaseMessaging;
 
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class ConversationsActivity extends AppCompatActivity {
@@ -28,6 +34,8 @@ public class ConversationsActivity extends AppCompatActivity {
     private ConversationsAdapter adapter;
     private ArrayList<Conversation> conversations;
     private ConversationRepository conversationRepository;
+
+    private AppDatabase db = AppDatabase.getInstance(this);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,6 +68,7 @@ public class ConversationsActivity extends AppCompatActivity {
             Intent intent = new Intent(getApplicationContext(), ChatActivity.class);
 
             Conversation currentConversation = conversations.get(i);
+            currentConversation.resetHasNewMessage();
 
             intent.putExtra("userName", currentConversation.getUserName());
             intent.putExtra("profilePicture", currentConversation.getProfilePicture());
@@ -123,6 +132,11 @@ public class ConversationsActivity extends AppCompatActivity {
             intent.putExtra("SHOW_URL", false);
             startActivity(intent);
         });
+
+        MyFirebaseMessagingService.getLiveData().observe(this, s -> {
+            conversationRepository.loadConversations(viewModel.getUsers());
+            Log.println(Log.INFO, s, s);
+        });
     }
 
     @Override
@@ -130,4 +144,32 @@ public class ConversationsActivity extends AppCompatActivity {
         super.onResume();
         conversationRepository.loadConversations(viewModel.getUsers());
     }
+
+    @Override
+    public void onBackPressed() {
+        new AlertDialog.Builder(this)
+                .setTitle("Logout")
+                .setMessage("Are you sure you want to logout?")
+                .setPositiveButton("Yes", (dialog, which) -> {
+                    new Thread(() -> {
+                        List<User> chats = db.userDao().getChats();
+                        for (User chat : chats) {
+                            FirebaseMessaging.getInstance().unsubscribeFromTopic(chat.getChatID() + "_" + AppDatabase.getUsername());
+                        }
+                        db.clearAllTables();
+                    }).start();
+                    // Start MainActivity after logging out
+                    Intent intent = new Intent(ConversationsActivity.this, MainActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                    startActivity(intent);
+                    finish();
+                    finishAffinity();
+
+                    // Or you can use this to move the app to the background:
+                    // moveTaskToBack(true);
+                })
+                .setNegativeButton("No", null)
+                .show();
+    }
+
 }

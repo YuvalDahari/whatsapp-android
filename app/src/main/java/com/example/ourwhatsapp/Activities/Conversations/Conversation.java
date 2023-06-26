@@ -7,12 +7,15 @@ public class Conversation {
     private final String lastMassageSendingTime;
     private final String chatID;
 
+    private int hasNewMessage;
+
     public Conversation(String userName, String profilePicture, String lastMassage, String lastMassageSendingTime, String chatID) {
         this.userName = userName;
         this.profilePicture = profilePicture;
         this.lastMassage = lastMassage;
         this.lastMassageSendingTime = lastMassageSendingTime;
         this.chatID = chatID;
+        this.hasNewMessage = 0;
     }
 
     public String getChatID() {
@@ -33,5 +36,15 @@ public class Conversation {
 
     public String getUserName() {
         return userName;
+    }
+
+    public int getHasNewMessage() {return hasNewMessage;}
+
+    public void resetHasNewMessage() {
+        hasNewMessage = 0;
+    }
+
+    public void addNewMessage() {
+        hasNewMessage++;
     }
 }
