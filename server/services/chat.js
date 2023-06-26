@@ -169,7 +169,6 @@ const sendMessage = async (sender, chatID, messageContent) => {
         var topic1 = chatID + "_" + secondUserData.username;
         var fcm = new FCM(serverKey);
 
-        console.log(topic1);
 
         const firstUsername = chat.users[0].equals(user._id) ? chat.users[0] : chat.users[1];
         const firstUserData = await UserService.getUserByID(firstUsername);
@@ -189,8 +188,6 @@ const sendMessage = async (sender, chatID, messageContent) => {
         fcm.send(pushNotificationMessage, function (err, response) {
             if (err) {
                 console.log(err);
-            } else {
-                console.log("Successfully sent with response: ", response);
             }
         });
 

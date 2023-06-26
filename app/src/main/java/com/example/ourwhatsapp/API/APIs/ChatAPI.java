@@ -164,7 +164,7 @@ public class ChatAPI {
                     Chat newChat = response.body();
                     List<Conversation> newUsers = users.getValue();
                     newUsers.add(new Conversation(
-                            newChat.getUser().getUsername(),
+                            newChat.getUser().getDisplayName(),
                             newChat.getUser().getProfilePic(),
                             null, null, newChat.getId()
                     ));
