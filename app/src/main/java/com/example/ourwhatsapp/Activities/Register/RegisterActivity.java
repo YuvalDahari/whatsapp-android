@@ -14,6 +14,7 @@ import android.widget.Toast;
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.appcompat.app.AppCompatDelegate;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.MainActivity;
@@ -87,7 +88,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (Utils.isValidUsername(s.toString())) {
                     binding.loginUsername.setTextColor(Color.RED);
                 } else {
-                    binding.loginUsername.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.loginUsername.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.loginUsername.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
@@ -104,7 +111,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (Utils.isValidPassword(s.toString())) {
                     binding.loginPassword.setTextColor(Color.RED);
                 } else {
-                    binding.loginPassword.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.loginPassword.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.loginPassword.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
@@ -121,7 +134,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (Utils.isValidDisplayName(s.toString())) {
                     binding.displayName.setTextColor(Color.RED);
                 } else {
-                    binding.displayName.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.displayName.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.displayName.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
@@ -139,7 +158,13 @@ public class RegisterActivity extends AppCompatActivity {
                 if (!(s.toString().equals(password))) {
                     binding.confirmPassword.setTextColor(Color.RED);
                 } else {
-                    binding.confirmPassword.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.confirmPassword.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.confirmPassword.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });

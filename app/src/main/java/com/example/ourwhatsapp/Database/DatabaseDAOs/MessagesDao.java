@@ -7,15 +7,11 @@ import androidx.room.Query;
 import androidx.room.Update;
 
 import com.example.ourwhatsapp.Database.Entities.Messages;
-import com.example.ourwhatsapp.Database.Entities.User;
 
 import java.util.List;
 
 @Dao
 public interface MessagesDao {
-
-    @Query("SELECT * FROM messages")
-    List<Messages> getAll();
 
     @Query("SELECT * FROM messages WHERE id = :id")
     Messages get(int id);
@@ -31,9 +27,6 @@ public interface MessagesDao {
 
     @Delete
     void delete(Messages... messages);
-
-    @Query("DELETE FROM messages")
-    void deleteAll();
 
     @Query("DELETE FROM messages WHERE chatID = :chatID")
     void delete(String chatID);

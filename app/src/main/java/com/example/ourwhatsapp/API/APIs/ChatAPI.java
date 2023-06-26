@@ -4,6 +4,7 @@ package com.example.ourwhatsapp.API.APIs;
 import android.content.Context;
 import android.widget.Toast;
 
+import androidx.annotation.NonNull;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.API.Entities.Chat;
@@ -29,11 +30,10 @@ import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
 
 public class ChatAPI {
-    private Retrofit retrofit;
-    private WebServiceAPI webServiceAPI;
-    private MessagesDao messagesDao;
-    private UserDao userDao;
-    private Context context;
+    private final WebServiceAPI webServiceAPI;
+    private final MessagesDao messagesDao;
+    private final UserDao userDao;
+    private final Context context;
 
 
     public ChatAPI(MessagesDao messagesDao, UserDao userDao, Context context) {
@@ -41,19 +41,19 @@ public class ChatAPI {
         this.userDao = userDao;
         this.context = context;
 
-        this.retrofit = new Retrofit.Builder()
+        Retrofit retrofit = new Retrofit.Builder()
                 .baseUrl(Utils.getURL(context))
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        this.webServiceAPI = this.retrofit.create(WebServiceAPI.class);
+        this.webServiceAPI = retrofit.create(WebServiceAPI.class);
     }
 
     public void getConversations(String token, MutableLiveData<List<Conversation>> users) {
         Call<List<Chat>> getChats = webServiceAPI.getChats(token);
         getChats.enqueue(new Callback<List<Chat>>() {
             @Override
-            public void onResponse(Call<List<Chat>> call, Response<List<Chat>> response) {
+            public void onResponse(@NonNull Call<List<Chat>> call, @NonNull Response<List<Chat>> response) {
                 if (response.isSuccessful()) {
                     List<Chat> chats = response.body();
                     List<Conversation> conversations = new ArrayList<>();
@@ -64,7 +64,7 @@ public class ChatAPI {
                                     chat.getUser().getDisplayName(), chat.getUser().getUsername(),
                                     chat.getUser().getProfilePic(), chat.getLastMessage().getContent(),
                                     chat.getLastMessage().getCreated()));
-                            conversations.add(new Conversation(chat.getUser().getUsername(),
+                            conversations.add(new Conversation(chat.getUser().getDisplayName(),
                                     chat.getUser().getProfilePic(),
                                     chat.getLastMessage().getContent(), chat.getLastMessage().getCreated(),
                                     chat.getId()));
@@ -73,7 +73,7 @@ public class ChatAPI {
                                     chat.getUser().getDisplayName(), chat.getUser().getUsername(),
                                     chat.getUser().getProfilePic(), null,
                                     null));
-                            conversations.add(new Conversation(chat.getUser().getUsername(),
+                            conversations.add(new Conversation(chat.getUser().getDisplayName(),
                                     chat.getUser().getProfilePic(),
                                     null, null,
                                     chat.getId()));

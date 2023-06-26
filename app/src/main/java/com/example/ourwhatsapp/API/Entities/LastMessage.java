@@ -3,7 +3,7 @@ package com.example.ourwhatsapp.API.Entities;
 public class LastMessage {
     private String id;
 
-    private String created;
+    private final String created;
 
     private String content;
 
@@ -23,10 +23,6 @@ public class LastMessage {
 
     public String getCreated() {
         return created;
-    }
-
-    public void setCreated(String created) {
-        this.created = created;
     }
 
     public String getContent() {

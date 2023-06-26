@@ -5,32 +5,25 @@ import android.content.Context;
 import androidx.lifecycle.MutableLiveData;
 
 import com.example.ourwhatsapp.API.APIs.ChatAPI;
-import com.example.ourwhatsapp.Activities.Conversations.Conversation;
 import com.example.ourwhatsapp.Activities.Messages.Message;
 import com.example.ourwhatsapp.Database.AppDatabase;
 import com.example.ourwhatsapp.Database.DatabaseDAOs.MessagesDao;
 import com.example.ourwhatsapp.Database.DatabaseDAOs.UserDao;
 import com.example.ourwhatsapp.Database.Entities.Messages;
-import com.example.ourwhatsapp.Database.Entities.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class ChatRepository {
-    private UserDao userDao;
-    private MessagesDao messagesDao;
-    private Context context;
-    private String token;
-    private ChatAPI chatAPI;
-    private String chatID;
+    private final MessagesDao messagesDao;
+    private final ChatAPI chatAPI;
+    private final String chatID;
 
     public ChatRepository(Context context, String chatID) {
         AppDatabase db = AppDatabase.getInstance(context);
-        this.context = context;
-        userDao = db.userDao();
+        UserDao userDao = db.userDao();
         messagesDao = db.messageDao();
-        token = AppDatabase.getToken();
         chatAPI = new ChatAPI(messagesDao, userDao, context);
         this.chatID = chatID;
     }
@@ -53,8 +46,6 @@ public class ChatRepository {
     }
 
     public void sendMessage(String message, String chatID, MutableLiveData<List<Message>> messages) {
-        new Thread(() -> {
-            chatAPI.sendMessage(AppDatabase.getToken(), chatID, message, messages);
-        }).start();
+        new Thread(() -> chatAPI.sendMessage(AppDatabase.getToken(), chatID, message, messages)).start();
     }
 }

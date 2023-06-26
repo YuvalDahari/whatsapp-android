@@ -54,7 +54,6 @@ public class ConversationsActivity extends AppCompatActivity {
         conversations = new ArrayList<>();
 
         viewModel.getUsers().observe(this, newConversations -> {
-            conversations.clear();
             newConversations.sort((o1, o2) -> {
                 String timeOfO1 = o1.getLastMassageSendingTime();
                 String timeOfO2 = o2.getLastMassageSendingTime();
@@ -80,12 +79,13 @@ public class ConversationsActivity extends AppCompatActivity {
 
                 } catch (ParseException e) {
                     e.printStackTrace();
+                    return 0;
                 }
 
                 return 0;
             });
 
-
+            conversations.clear();
             conversations.addAll(newConversations);
             for (Conversation conversation : newConversations) {
                 FirebaseMessaging.getInstance().subscribeToTopic(conversation.getChatID() + "_" + AppDatabase.getUsername());

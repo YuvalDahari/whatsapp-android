@@ -56,7 +56,13 @@ public class SettingsActivity extends AppCompatActivity {
                 if (Utils.isValidURL(s.toString())) {
                     binding.serverPort.setTextColor(Color.RED);
                 } else {
-                    binding.serverPort.setTextColor(Color.BLACK);
+                    if(AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES){
+                        // Night mode is enabled
+                        binding.serverPort.setTextColor(Color.WHITE);
+                    } else {
+                        // Night mode is disabled
+                        binding.serverPort.setTextColor(Color.BLACK);
+                    }
                 }
             }
         });
